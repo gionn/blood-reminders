@@ -4,6 +4,7 @@ from django.utils import timezone
 class Donor(models.Model):
     name = models.CharField(max_length=200)
     tax_code = models.CharField(max_length=16,unique=True)
+    born_date = models.DateTimeField(default='1970-01-01 00:00')
     gender = models.CharField(max_length=1,choices=(
         ('M', 'Male'),
         ('F', 'Female'),
@@ -26,6 +27,11 @@ class Donation(models.Model):
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE)
     done_at = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
+    donation_type = models.CharField(max_length=1,blank=True,choices=(
+        ('S', 'Sangue Intero'),
+        ('P', 'Plasmaferesi'),
+        ('M', 'Multicomponent')
+    ))
 
     def __str__(self):
         return 'donation of ' + self.donor.name + ' at ' + self.done_at.strftime('%d %B %Y')
