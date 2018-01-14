@@ -3,6 +3,19 @@ from django.utils import timezone
 
 class Donor(models.Model):
     name = models.CharField(max_length=200)
+    tax_code = models.CharField(max_length=16,unique=True)
+    gender = models.CharField(max_length=1,choices=(
+        ('M', 'Male'),
+        ('F', 'Female'),
+        ('O', 'Undefined'),
+    ))
+    last_donation_type = models.CharField(max_length=1,blank=True,choices=(
+        ('S', 'Sangue Intero'),
+        ('P', 'Plasmaferesi'),
+        ('M', 'Multicomponent')
+    ))
+    phone = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
 
     def __str__(self):
