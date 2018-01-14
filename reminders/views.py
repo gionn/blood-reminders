@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.db.models import Q
 from django.db.models import F
 
@@ -16,12 +16,10 @@ logger = logging.getLogger(__name__)
 
 def upload(request):
     if request.method == 'POST':
-        logger.warn('is a post')
         form = UploadFileForm(request.POST, request.FILES)
         if form.is_valid():
-            logger.warn('is valid')
             handle_uploaded_file(request.FILES['file'])
-            return HttpResponseRedirect('/admin/')
+            return HttpResponseRedirect('/reminders/')
     else:
         form = UploadFileForm()
     logger.info('rendering form')
@@ -35,6 +33,8 @@ from reminders.models import Donor
 def handle_uploaded_file(file):
     csv_file = StringIO(file.read().decode())
     reader = csv.DictReader(csv_file,delimiter=';')
+    created = 0
+    updated = 0
     for row in reader:
         csv_last_donation_type = ''
         if row['Tipo Ultima Donazione'] == 'Sangue intero':
@@ -45,13 +45,25 @@ def handle_uploaded_file(file):
             csv_last_donation_type = 'M'
         else:
             logger.warn('Unrecognized value "{}"'.format(row['Tipo Ultima Donazione']))
-        
-        d = Donor(
-            name=row['Soggetto'],
-            tax_code=row['Codice Fiscale'],
-            gender=row['Sesso'],
-            last_donation_type=csv_last_donation_type,
-            phone=row['Recapiti telefonici'],
-            email=row['Recapiti mail'],
-        )
-        d.save()
+
+        split_phone = row['Recapiti telefonici'].split(';')[0]
+
+        try:
+            existing_donor = Donor.objects.get(tax_code=row['Codice Fiscale'])
+            existing_donor.last_donation_type = csv_last_donation_type
+            existing_donor.phone=split_phone
+            existing_donor.email=row['Recapiti mail']
+            existing_donor.save()
+            updated += 1
+        except Donor.DoesNotExist:
+            d = Donor(
+                name=row['Soggetto'],
+                tax_code=row['Codice Fiscale'],
+                gender=row['Sesso'],
+                last_donation_type=csv_last_donation_type,
+                phone=split_phone,
+                email=row['Recapiti mail'],
+            )
+            d.save()
+            created += 1
+    logger.warn('Finished importing: {} creation, {} update'.format(created,updated))
