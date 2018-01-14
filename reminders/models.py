@@ -33,7 +33,7 @@ class Donation(models.Model):
         ('P', 'Plasmaferesi'),
         ('M', 'Multicomponent')
     ))
-    ordering = ['-created_at']
+    ordering = ['-done_at']
 
     def __str__(self):
         return 'donation of ' + self.donor.name + ' at ' + self.done_at.strftime('%d %B %Y')

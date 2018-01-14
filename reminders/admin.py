@@ -42,16 +42,19 @@ class NeedsReminderSentFilter(admin.SimpleListFilter):
 class DonorAdmin(admin.ModelAdmin):
     list_filter = (NeedsReminderSentFilter,)
     search_fields = ['name','tax_code']
+    ordering = ['-created_at']
 
 
 class DonationAdmin(admin.ModelAdmin):
     search_fields = ['donor__name']
     autocomplete_fields = ['donor']
+    ordering = ['-done_at']
 
 
 class ReminderAdmin(admin.ModelAdmin):
     search_fields = ['donor__name']
     autocomplete_fields = ['donor']
+    ordering = ['-sent_at']
 
 
 admin.site.register(Donor, DonorAdmin)
