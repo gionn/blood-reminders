@@ -31,18 +31,29 @@ class NeedsReminderSentFilter(admin.SimpleListFilter):
             return queryset.filter(
                 not_recent_donation_taken | donation_never_taken,
                 not_recent_reminder_sent | reminder_never_sent
-            )
+            ).distinct()
         if self.value() == 'false':
             return queryset.exclude(
                 not_recent_donation_taken | donation_never_taken,
                 not_recent_reminder_sent | reminder_never_sent
-            )
+            ).distinct()
 
 
 class DonorAdmin(admin.ModelAdmin):
     list_filter = (NeedsReminderSentFilter,)
+    search_fields = ['name','tax_code']
+
+
+class DonationAdmin(admin.ModelAdmin):
+    search_fields = ['donor__name']
+    autocomplete_fields = ['donor']
+
+
+class ReminderAdmin(admin.ModelAdmin):
+    search_fields = ['donor__name']
+    autocomplete_fields = ['donor']
 
 
 admin.site.register(Donor, DonorAdmin)
-admin.site.register(Donation)
-admin.site.register(Reminder)
+admin.site.register(Donation, DonationAdmin)
+admin.site.register(Reminder, ReminderAdmin)

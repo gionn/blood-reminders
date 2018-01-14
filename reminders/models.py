@@ -18,6 +18,7 @@ class Donor(models.Model):
     phone = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
+    ordering = ['-created_at']
 
     def __str__(self):
         return self.name
@@ -32,6 +33,7 @@ class Donation(models.Model):
         ('P', 'Plasmaferesi'),
         ('M', 'Multicomponent')
     ))
+    ordering = ['-created_at']
 
     def __str__(self):
         return 'donation of ' + self.donor.name + ' at ' + self.done_at.strftime('%d %B %Y')
@@ -40,6 +42,7 @@ class Donation(models.Model):
 class Reminder(models.Model):
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE)
     sent_at = models.DateTimeField(default=timezone.now)
+    ordering = ['-sent_at']
 
     def __str__(self):
         return 'reminder for ' + self.donor.name + ' at ' + self.sent_at.strftime('%d %B %Y')
