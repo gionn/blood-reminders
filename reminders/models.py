@@ -35,8 +35,11 @@ class Donation(models.Model):
     ))
     ordering = ['-done_at']
 
+    def done_at_pretty(self):
+        return self.done_at.strftime('%Y-%m-%d')
+
     def __str__(self):
-        return 'donation of ' + self.donor.name + ' at ' + self.done_at.strftime('%d %B %Y')
+        return 'donation by {}'.format(self.donor.name)
 
 
 class Reminder(models.Model):

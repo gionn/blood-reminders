@@ -55,12 +55,14 @@ class DonorAdmin(admin.ModelAdmin):
     list_filter = (NeedsReminderSentFilter,)
     search_fields = ['name','tax_code']
     ordering = ['-created_at']
+    list_display = ('name', 'gender', 'last_donation_type')
 
 
 class DonationAdmin(admin.ModelAdmin):
     search_fields = ['donor__name']
     autocomplete_fields = ['donor']
     ordering = ['-done_at']
+    list_display = ('donor', 'done_at_pretty', 'donation_type')
 
 
 class ReminderAdmin(admin.ModelAdmin):
