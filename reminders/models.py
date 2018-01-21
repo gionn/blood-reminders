@@ -16,6 +16,8 @@ class Donor(models.Model):
         ('M', 'Multicomponent')
     ))
     last_donation_date = models.DateField(default='1970-01-01',blank=True,null=True)
+    suspension_date = models.DateField(blank=True,null=True)
+    suspension_reason = models.CharField(max_length=512, blank=True)
     phone = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
