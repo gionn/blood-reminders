@@ -4,7 +4,7 @@ from django.utils import timezone
 class Donor(models.Model):
     name = models.CharField(max_length=200)
     tax_code = models.CharField(max_length=16,unique=True)
-    born_date = models.DateTimeField(default='1970-01-01 00:00')
+    born_date = models.DateField(default='1970-01-01')
     gender = models.CharField(max_length=1,choices=(
         ('M', 'Male'),
         ('F', 'Female'),
@@ -15,6 +15,7 @@ class Donor(models.Model):
         ('P', 'Plasmaferesi'),
         ('M', 'Multicomponent')
     ))
+    last_donation_date = models.DateField(default='1970-01-01',blank=True,null=True)
     phone = models.CharField(max_length=200)
     email = models.CharField(max_length=200)
     created_at = models.DateTimeField(default=timezone.now, editable=False)

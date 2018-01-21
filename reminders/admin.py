@@ -37,7 +37,7 @@ class DonorAdmin(admin.ModelAdmin):
     list_filter = (NeedsReminderSentFilter,)
     search_fields = ['name','tax_code']
     ordering = ['-created_at']
-    list_display = ('name', 'gender', 'last_donation_type')
+    list_display = ('name', 'gender', 'last_donation_type', 'last_donation_date')
 
 
 class DonationAdmin(admin.ModelAdmin):
