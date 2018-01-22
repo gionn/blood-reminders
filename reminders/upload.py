@@ -1,6 +1,6 @@
 import csv
 import logging
-from datetime import timedelta,datetime
+from datetime import datetime, timedelta
 from io import StringIO
 
 from django.db.models import F, Q
@@ -8,35 +8,13 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.utils import timezone
 
-from reminders.models import Donor,Donation
+from reminders.models import Donation, Donor
 
 from .forms import UploadFileForm
 from .models import Donor
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
-
-def upload_donors(request):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            handle_uploaded_donors_file(request.FILES['file'])
-            return HttpResponseRedirect('/reminders/upload_donors')
-    else:
-        form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form, 'form_url': 'upload_donors'})
-
-def upload_donations(request):
-    if request.method == 'POST':
-        form = UploadFileForm(request.POST, request.FILES)
-        if form.is_valid():
-            handle_uploaded_donations_file(request.FILES['file'])
-            return HttpResponseRedirect('/reminders/upload_donations')
-    else:
-        form = UploadFileForm()
-    return render(request, 'upload.html', {'form': form, 'form_url': 'upload_donations'})
-
-
 
 def handle_uploaded_donors_file(file):
     csv_file = StringIO(file.read().decode())
