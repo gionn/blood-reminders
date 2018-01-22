@@ -1,10 +1,9 @@
 import logging
 
 from django.contrib import admin
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
-from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 from reminders.query import DonorQuerySet

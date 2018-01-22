@@ -1,4 +1,4 @@
-from django.db.models import Q,F,Max
+from django.db.models import Max, Q
 from django.utils import timezone
 from datetime import timedelta
 

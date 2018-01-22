@@ -1,16 +1,12 @@
 import csv
 import logging
-from datetime import datetime, timedelta
+from datetime import datetime
 from io import StringIO
 
-from django.db.models import F, Q
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render
 from django.utils import timezone
 
 from reminders.models import Donation, Donor
 
-from .forms import UploadFileForm
 from .models import Donor
 
 # Get an instance of a logger
