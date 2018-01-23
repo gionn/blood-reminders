@@ -39,6 +39,7 @@ class DonorAdmin(admin.ModelAdmin):
     search_fields = ['name','tax_code']
     ordering = ['-created_at']
     list_display = ('name', 'gender', 'last_donation_type', 'last_donation_date')
+    view_on_site = False
 
     def get_urls(self):
         urls = super().get_urls()
@@ -60,6 +61,7 @@ class DonorAdmin(admin.ModelAdmin):
         )
         context['form'] = form
         context['form_url'] = 'admin:upload_donors'
+        context['title'] = 'Import donors CSV'
         return TemplateResponse(request, 'upload.html', context)
 
 
@@ -68,6 +70,7 @@ class DonationAdmin(admin.ModelAdmin):
     autocomplete_fields = ['donor']
     ordering = ['-done_at']
     list_display = ('donor', 'done_at_pretty', 'donation_type')
+    view_on_site = False
 
     def get_urls(self):
         urls = super().get_urls()
@@ -89,6 +92,7 @@ class DonationAdmin(admin.ModelAdmin):
         )
         context['form'] = form
         context['form_url'] = 'admin:upload_donations'
+        context['title'] = 'Import donations CSV'
         return TemplateResponse(request, 'upload.html', context)
 
 
@@ -97,6 +101,7 @@ class ReminderAdmin(admin.ModelAdmin):
     search_fields = ['donor__name']
     autocomplete_fields = ['donor']
     ordering = ['-sent_at']
+    view_on_site = False
 
 
 admin.site.register(Donor, DonorAdmin)

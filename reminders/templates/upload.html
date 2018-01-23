@@ -1,12 +1,10 @@
 {% extends "admin/base_site.html" %}
 {% block content %}
-<h1>upload</h1>
-
 {% if error_message %}<p><strong>{{ error_message }}</strong></p>{% endif %}
 
 <form action="{% url form_url %}" method="post" enctype="multipart/form-data">
 {% csrf_token %}
 {{ form }}
-<input type="submit" value="Upload!" />
+<input type="submit" value="Import" />
 </form>
 {% endblock %}
