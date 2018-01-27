@@ -116,4 +116,4 @@ class ReminderAdmin(admin.ModelAdmin):
 admin.site.register(Donor, DonorAdmin)
 admin.site.register(Donation, DonationAdmin)
 admin.site.register(Reminder, ReminderAdmin)
-admin.site.site_header = 'Blood donors messaging system'
+admin.site.site_header = 'Blood donors reminders system'
