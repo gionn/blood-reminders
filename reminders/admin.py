@@ -39,6 +39,7 @@ class DonorAdmin(admin.ModelAdmin):
     search_fields = ['name','tax_code']
     ordering = ['-created_at']
     list_display = ('name', 'gender', 'last_donation_type', 'last_donation_date')
+    actions = ['create_reminder']
     view_on_site = False
 
     def get_urls(self):
@@ -63,6 +64,12 @@ class DonorAdmin(admin.ModelAdmin):
         context['form_url'] = 'admin:upload_donors'
         context['title'] = 'Import donors CSV'
         return TemplateResponse(request, 'upload.html', context)
+
+    def create_reminder(self, request, queryset):
+        for donor in queryset:
+            Reminder.objects.create(
+                donor=donor
+            )
 
 
 class DonationAdmin(admin.ModelAdmin):
