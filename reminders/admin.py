@@ -68,7 +68,8 @@ class DonorAdmin(admin.ModelAdmin):
     def create_reminder(self, request, queryset):
         for donor in queryset:
             Reminder.objects.create(
-                donor=donor
+                donor = donor,
+                created_by = request.user
             )
 
 
@@ -109,6 +110,7 @@ class ReminderAdmin(admin.ModelAdmin):
     autocomplete_fields = ['donor']
     ordering = ['-sent_at']
     view_on_site = False
+    readonly_fields = ['created_by']
 
 
 admin.site.register(Donor, DonorAdmin)

@@ -1,5 +1,6 @@
 from django.db import models
 from django.utils import timezone
+from django.contrib.auth.models import User
 
 class Donor(models.Model):
     name = models.CharField(max_length=200)
@@ -48,6 +49,7 @@ class Donation(models.Model):
 class Reminder(models.Model):
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE)
     sent_at = models.DateTimeField(default=timezone.now)
+    created_by = models.ForeignKey(User, null=True, on_delete=models.SET_NULL)
     ordering = ['-sent_at']
 
     def __str__(self):
