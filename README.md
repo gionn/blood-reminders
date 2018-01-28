@@ -21,6 +21,7 @@ This is my first django / python application, please be gently.
 * Sending personal reminders via SMS
 * Sending personal reminders via WhatsApp
 * Sending reminders automatically based on a schedule
+* Sending reminders based on current blood availability (https://web2.e.toscana.it/crs/meteo/)
 
 ## Usage (docker)
 
