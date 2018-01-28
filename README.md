@@ -1,5 +1,7 @@
 # Fratres blood reminders
 
+[![Docker Build Status](https://img.shields.io/docker/build/gionn/blood-reminders.svg)]() [![Docker Automated build](https://img.shields.io/docker/automated/gionn/blood-reminders.svg)]()
+
 A web application to remind people that they can do a new donation after a time frame.
 
 This has been developed inside my local [FRATRES](http://www.fratres.org) group to help the reminding process of the donors.
