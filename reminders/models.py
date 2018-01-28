@@ -2,6 +2,12 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+donation_type = (
+    ('B', 'Blood'),
+    ('P', 'Plasma'),
+    ('M', 'Multicomponent')
+)
+
 class Donor(models.Model):
     name = models.CharField(max_length=200)
     tax_code = models.CharField(max_length=16,unique=True)
@@ -11,11 +17,7 @@ class Donor(models.Model):
         ('F', 'Female'),
         ('', 'undefined'),
     ))
-    last_donation_type = models.CharField(max_length=1,blank=True,choices=(
-        ('B', 'Blood'),
-        ('P', 'Plasma'),
-        ('M', 'Multicomponent')
-    ))
+    last_donation_type = models.CharField(max_length=1, blank=True, choices=donation_type)
     blood_type = models.CharField(max_length=2, blank=True, null=True, choices=(
         ('O', 'O'),
         ('AB', 'AB'),
@@ -43,11 +45,7 @@ class Donation(models.Model):
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE)
     done_at = models.DateTimeField(default=timezone.now)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
-    donation_type = models.CharField(max_length=1,blank=True,choices=(
-        ('S', 'Sangue Intero'),
-        ('P', 'Plasmaferesi'),
-        ('M', 'Multicomponent')
-    ))
+    donation_type = models.CharField(max_length=1, blank=True, choices= donation_type)
     ordering = ['-done_at']
 
     def done_at_pretty(self):
