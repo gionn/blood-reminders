@@ -1,0 +1,9 @@
+version: "3"
+
+services:
+  reminders:
+    build: ./
+    volumes:
+     - ./data:/data
+    ports:
+      - "80:8000"
