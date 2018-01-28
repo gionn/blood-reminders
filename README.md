@@ -30,4 +30,11 @@ Use prebuilt image:
 
     docker run -e SECRET_KEY='a-random-secret-key' gionn/blood-reminders
 
-Access http://localhost
+Access http://localhost/admin/
+
+### Docker environment variables
+
+* SECRET_KEY: generate one [here](https://www.miniwebtool.com/django-secret-key-generator/)
+* ADMIN_USERNAME: the username of the first created superadmin user (default: admin)
+* ADMIN_PASSWORD: the password of the first created superadmin user (default: changeme)
+* ADMIN_EMAIL: the email of the first created superadmin user (default: admin@change.me)
