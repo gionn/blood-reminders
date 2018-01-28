@@ -30,6 +30,8 @@ def handle_uploaded_donors_file(file):
             existing_donor.born_date = csv_born_date
             existing_donor.phone=split_phone
             existing_donor.email=row['Recapiti mail']
+            existing_donor.blood_type=row['Gruppo sanguigno']
+            existing_donor.blood_rh=convert_rh(row['Rh'])
             existing_donor.save()
             updated += 1
         except Donor.DoesNotExist:
@@ -38,6 +40,8 @@ def handle_uploaded_donors_file(file):
                 tax_code=row['Codice Fiscale'],
                 born_date=csv_born_date,
                 gender=row['Sesso'],
+                blood_type=row['Gruppo sanguigno'],
+                blood_rh=convert_rh(row['Rh']),
                 last_donation_type=csv_last_donation_type,
                 last_donation_date=csv_last_donation_date,
                 phone=split_phone,
@@ -81,7 +85,7 @@ def handle_uploaded_donations_file(file):
 def get_donation_type(input):
     output = ''
     if input == 'Sangue intero':
-        output = 'S'
+        output = 'B'
     elif input == 'Plasmaferesi':
         output = 'P'
     elif input == 'Multicomponent':
@@ -96,3 +100,12 @@ def convert_date(date_string):
     date = datetime.strptime(date_string,'%d/%m/%Y')
     current_tz = timezone.get_current_timezone()
     return current_tz.localize(date)
+
+def convert_rh(string):
+    if not string:
+        return ''
+    if string.lower() == 'positivo':
+        return '+'
+    if string.lower() == 'negativo':
+        return '-'
+    logger.warn('unhandled rh {}'.format(string))

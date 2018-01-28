@@ -9,12 +9,23 @@ class Donor(models.Model):
     gender = models.CharField(max_length=1,choices=(
         ('M', 'Male'),
         ('F', 'Female'),
-        ('O', 'Undefined'),
+        ('', 'undefined'),
     ))
     last_donation_type = models.CharField(max_length=1,blank=True,choices=(
-        ('S', 'Sangue Intero'),
-        ('P', 'Plasmaferesi'),
+        ('B', 'Blood'),
+        ('P', 'Plasma'),
         ('M', 'Multicomponent')
+    ))
+    blood_type = models.CharField(max_length=2, blank=True, null=True, choices=(
+        ('O', 'O'),
+        ('AB', 'AB'),
+        ('A', 'A'),
+        ('B', 'B')
+    ))
+    blood_rh = models.CharField(max_length=1, blank=True, null=True, choices=(
+        ('+', 'Positive'),
+        ('-', 'Negative'),
+        ('', 'undefined')
     ))
     last_donation_date = models.DateField(default='1970-01-01',blank=True,null=True)
     suspension_date = models.DateField(blank=True,null=True)
