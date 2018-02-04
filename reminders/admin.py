@@ -4,6 +4,7 @@ from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
+from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
 from reminders.query import DonorQuerySet
@@ -38,9 +39,17 @@ class DonorAdmin(admin.ModelAdmin):
     list_filter = (NeedsReminderSentFilter,)
     search_fields = ['name','tax_code']
     ordering = ['-created_at']
-    list_display = ('name', 'gender', 'last_donation_type', 'last_donation_date')
+    list_display = ('name', 'gender', 'last_donation_type', 'last_donation_date', 'whatsapp_send')
     actions = ['create_reminder']
     view_on_site = False
+
+    def whatsapp_send(self, obj):
+      return format_html('<a target=_blank href="https://api.whatsapp.com/send?phone={}"></a>', obj.phone)
+
+    class Media:
+      css = {
+          "all": ("my_styles.css",)
+      }
 
     def get_urls(self):
         urls = super().get_urls()
