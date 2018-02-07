@@ -28,9 +28,7 @@ class NeedsReminderSentFilter(admin.SimpleListFilter):
     def queryset(self, request, queryset):
         donor_queryset = DonorQuerySet()
         if self.value() == 'true':
-            queryset = donor_queryset.get_donors_with_reminders(queryset)
-            logger.warn(queryset.query)
-            return queryset
+            return donor_queryset.get_donors_with_reminders(queryset)
         if self.value() == 'false':
             return donor_queryset.get_donors_without_reminders(queryset)
 
