@@ -67,7 +67,6 @@ def handle_uploaded_donations_file(file):
                 )
             continue
         except Donor.DoesNotExist:
-            logger.warn("Donor {} not found".format(row['Donatore']))
             continue
         except Donation.DoesNotExist:
             existing_donor = Donor.objects.get(name=row['Donatore'],born_date=csv_born_date)
