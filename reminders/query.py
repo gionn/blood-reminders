@@ -15,7 +15,7 @@ class DonorQuerySet():
         not_suspended = Q(suspension_date__lte=timezone.now()) | Q(suspension_date__isnull=True)
 
         donation_never_taken = Q(donation__isnull=True)
-        not_recent_reminder_sent = Q(reminder__sent_at__lte=timezone.now() - timedelta(days=7))
+        not_recent_reminder_sent = Q(reminder__sent_at__lte=timezone.now() - timedelta(days=21))
         reminder_never_sent = Q(reminder__isnull=True)
 
         return ( 
