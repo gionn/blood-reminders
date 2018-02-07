@@ -6,7 +6,7 @@ class DonorQuerySet():
     def get_base_queryset(self):
         male = Q(gender='M')
         female = Q(gender='F')
-        blood_donation = Q(last_donation_type='S')
+        blood_donation = Q(last_donation_type='B')
         plasma_donation = Q(last_donation_type='P')
         not_recent_donation_taken_male = Q(last_donation__lte=timezone.now() - timedelta(days=90))
         not_recent_donation_taken_female = Q(last_donation__lte=timezone.now() - timedelta(days=180))
