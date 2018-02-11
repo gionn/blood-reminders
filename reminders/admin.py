@@ -75,7 +75,8 @@ class DonorAdmin(admin.ModelAdmin):
     list_per_page = 20
 
     def whatsapp_send(self, obj):
-      return format_html('<a target=_blank href="https://api.whatsapp.com/send?phone={}"></a>', obj.phone)
+      if obj.phone:
+        return format_html('<a target=_blank href="https://api.whatsapp.com/send?phone={}"></a>', obj.phone)
 
     class Media:
       css = {

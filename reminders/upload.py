@@ -21,17 +21,16 @@ def handle_uploaded_donors_file(file):
         csv_last_donation_type = get_donation_type(row['Tipo Ultima Donazione'])
         csv_last_donation_date = convert_date(row['Data Ultima Donazione'])
         csv_born_date = convert_date(row['Data Nascita'])
-        split_phone = row['Recapiti telefonici'].split(';')[0]
+        phone = convert_phone(row['Recapiti telefonici'])
 
         try:
             existing_donor = Donor.objects.get(tax_code=row['Codice Fiscale'])
             existing_donor.last_donation_type = csv_last_donation_type
             existing_donor.last_donation_date = csv_last_donation_date
-            existing_donor.born_date = csv_born_date
-            existing_donor.phone=split_phone
-            existing_donor.email=row['Recapiti mail']
-            existing_donor.blood_type=row['Gruppo sanguigno']
-            existing_donor.blood_rh=convert_rh(row['Rh'])
+            if not existing_donor.phone or not existing_donor.phone.startswith('+'):
+              existing_donor.phone=phone
+            if not existing_donor.email:
+              existing_donor.email=row['Recapiti mail']
             existing_donor.save()
             updated += 1
         except Donor.DoesNotExist:
@@ -44,7 +43,7 @@ def handle_uploaded_donors_file(file):
                 blood_rh=convert_rh(row['Rh']),
                 last_donation_type=csv_last_donation_type,
                 last_donation_date=csv_last_donation_date,
-                phone=split_phone,
+                phone=phone,
                 email=row['Recapiti mail'],
             )
             d.save()
@@ -108,3 +107,9 @@ def convert_rh(string):
     if string.lower() == 'negativo':
         return '-'
     logger.warn('unhandled rh {}'.format(string))
+
+def convert_phone(string):
+    phone = string.split(';')[0]
+    if phone and not phone.startswith('+'):
+      phone = '+39' + phone
+    return phone
