@@ -36,8 +36,8 @@ class Donor(models.Model):
     last_donation_date = models.DateField(default='1970-01-01',blank=True,null=True)
     suspension_date = models.DateField(blank=True,null=True)
     suspension_reason = models.CharField(max_length=512, blank=True)
-    phone = models.CharField(max_length=200)
-    email = models.CharField(max_length=200)
+    phone = models.CharField(max_length=200, blank=True)
+    email = models.CharField(max_length=200, blank=True)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     ordering = ['-created_at']
 
