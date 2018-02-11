@@ -2,10 +2,14 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+BLOOD_TYPE = 'B'
+PLASMA_TYPE = 'P'
+MULTIC_TYPE = 'M'
+
 donation_type = (
-    ('B', 'Blood'),
-    ('P', 'Plasma'),
-    ('M', 'Multicomponent')
+    (BLOOD_TYPE, 'Blood'),
+    (PLASMA_TYPE, 'Plasma'),
+    (MULTIC_TYPE, 'Multicomponent')
 )
 
 class Donor(models.Model):
