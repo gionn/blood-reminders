@@ -10,24 +10,23 @@ class DonorTestCase(TestCase):
     base = Donor.objects.all()
 
     def test_empty(self):
-        self.assertEqual( self.queryset.get_donors_with_reminders(self.base).count(), 0)
-        self.assertEqual( self.queryset.get_donors_without_reminders(self.base).count(), 0)
-
+        self.assertEqual(self.queryset.get_donors_with_reminders(self.base).count(), 0)
+        self.assertEqual(self.queryset.get_donors_without_reminders(self.base).count(), 0)
 
     def test_male_donor_with_old_blood_donations(self):
-        donor = self.donor('male blood','M','S')
+        donor = self.donor('male blood', 'M', 'S')
         self.donation(donor, 100, 'S')
         self.donation(donor, 365, 'S')
         self.assertEqual(self.queryset.get_donors_with_reminders(self.base).count(), 1)
 
     def test_female_donor_with_old_blood_donations(self):
-        donor = self.donor('female blood','F','S')
+        donor = self.donor('female blood', 'F', 'S')
         self.donation(donor, 181, 'S')
         self.donation(donor, 365, 'S')
         self.assertEqual(self.queryset.get_donors_with_reminders(self.base).count(), 1)
 
     def test_male_donor_with_recent_blood_donations(self):
-        donor = self.donor('male blood','M','S')
+        donor = self.donor('male blood', 'M', 'S')
         self.donation(donor, 10, 'S')
         self.donation(donor, 100, 'S')
         self.donation(donor, 365, 'S')

@@ -3,6 +3,7 @@ from django.utils import timezone
 from datetime import timedelta
 from .models import BLOOD_TYPE, PLASMA_TYPE, MULTIC_TYPE
 
+
 class DonorQuerySet():
     def get_base_queryset(self):
         male = Q(gender='M')
@@ -18,22 +19,22 @@ class DonorQuerySet():
         not_recent_reminder_sent = Q(reminder__sent_at__lte=timezone.now() - timedelta(days=21))
         reminder_never_sent = Q(reminder__isnull=True)
 
-        return ( 
-            ( blood_donation & male & not_recent_donation_taken_male ) |
-            ( blood_donation & female & not_recent_donation_taken_female ) |
-            ( plasma_donation & not_recent_plasma_donation_taken )
+        return (
+            (blood_donation & male & not_recent_donation_taken_male) |
+            (blood_donation & female & not_recent_donation_taken_female) |
+            (plasma_donation & not_recent_plasma_donation_taken)
         ) & not_suspended & (
-            ( not_recent_reminder_sent | reminder_never_sent ) | donation_never_taken
+            (not_recent_reminder_sent | reminder_never_sent) | donation_never_taken
         )
 
     def get_donors_with_reminders(self, queryset):
         restriction = self.get_base_queryset()
         return queryset.annotate(
-                last_donation=Max('donation__done_at')
-            ).filter(restriction).distinct()
+            last_donation=Max('donation__done_at')
+        ).filter(restriction).distinct()
 
     def get_donors_without_reminders(self, queryset):
         restriction = self.get_base_queryset()
         return queryset.annotate(
-                last_donation=Max('donation__done_at')
-            ).exclude(restriction).distinct()
+            last_donation=Max('donation__done_at')
+        ).exclude(restriction).distinct()

@@ -12,9 +12,10 @@ from .models import Donor
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
+
 def handle_uploaded_donors_file(file):
     csv_file = StringIO(file.read().decode())
-    reader = csv.DictReader(csv_file,delimiter=';')
+    reader = csv.DictReader(csv_file, delimiter=';')
     created = 0
     updated = 0
     for row in reader:
@@ -28,9 +29,9 @@ def handle_uploaded_donors_file(file):
             existing_donor.last_donation_type = csv_last_donation_type
             existing_donor.last_donation_date = csv_last_donation_date
             if not existing_donor.phone or not existing_donor.phone.startswith('+'):
-              existing_donor.phone=phone
+                existing_donor.phone = phone
             if not existing_donor.email:
-              existing_donor.email=row['Recapiti mail']
+                existing_donor.email = row['Recapiti mail']
             existing_donor.save()
             updated += 1
         except Donor.DoesNotExist:
@@ -48,28 +49,28 @@ def handle_uploaded_donors_file(file):
             )
             d.save()
             created += 1
-    logger.warn('Finished importing: {} creation, {} update'.format(created,updated))
+    logger.warn('Finished importing: {} creation, {} update'.format(created, updated))
 
 
 def handle_uploaded_donations_file(file):
     csv_file = StringIO(file.read().decode())
-    reader = csv.DictReader(csv_file,delimiter=';')
+    reader = csv.DictReader(csv_file, delimiter=';')
     created = 0
     for row in reader:
         csv_donation_date = convert_date(row['Data'])
         csv_born_date = convert_date(row['Data Nascita'])
         try:
-            existing_donor = Donor.objects.get(name=row['Donatore'],born_date=csv_born_date)
+            existing_donor = Donor.objects.get(name=row['Donatore'], born_date=csv_born_date)
             existing_donation = Donation.objects.get(
                 donor=existing_donor,
                 done_at=csv_donation_date
-                )
+            )
             continue
         except Donor.DoesNotExist:
             continue
         except Donation.DoesNotExist:
-            existing_donor = Donor.objects.get(name=row['Donatore'],born_date=csv_born_date)
-            csv_donation_type = get_donation_type(row['Tipo donazione']) 
+            existing_donor = Donor.objects.get(name=row['Donatore'], born_date=csv_born_date)
+            csv_donation_type = get_donation_type(row['Tipo donazione'])
             d = Donation(
                 donor=existing_donor,
                 done_at=csv_donation_date,
@@ -92,12 +93,14 @@ def get_donation_type(input):
         logger.warn('Unrecognized value "{}"'.format(input))
     return output
 
+
 def convert_date(date_string):
     if not date_string:
         return None
-    date = datetime.strptime(date_string,'%d/%m/%Y')
+    date = datetime.strptime(date_string, '%d/%m/%Y')
     current_tz = timezone.get_current_timezone()
     return current_tz.localize(date)
+
 
 def convert_rh(string):
     if not string:
@@ -108,8 +111,9 @@ def convert_rh(string):
         return '-'
     logger.warn('unhandled rh {}'.format(string))
 
+
 def convert_phone(string):
     phone = string.split(';')[0]
     if phone and not phone.startswith('+'):
-      phone = '+39' + phone
+        phone = '+39' + phone
     return phone
