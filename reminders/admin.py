@@ -72,6 +72,7 @@ class DonorAdmin(admin.ModelAdmin):
     list_display = ('name', 'gender', 'last_donation_type', 'last_donation_date', 'whatsapp_send')
     actions = ['create_reminder']
     view_on_site = False
+    list_per_page = 20
 
     def whatsapp_send(self, obj):
       return format_html('<a target=_blank href="https://api.whatsapp.com/send?phone={}"></a>', obj.phone)
@@ -118,6 +119,7 @@ class DonationAdmin(admin.ModelAdmin):
     ordering = ['-done_at']
     list_display = ('donor', 'done_at_pretty', 'donation_type')
     view_on_site = False
+    list_per_page = 20
 
     def get_urls(self):
         urls = super().get_urls()
@@ -149,6 +151,7 @@ class ReminderAdmin(admin.ModelAdmin):
     autocomplete_fields = ['donor']
     ordering = ['-sent_at']
     view_on_site = False
+    list_per_page = 20
     readonly_fields = ['created_by']
 
 
