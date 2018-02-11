@@ -40,13 +40,17 @@ class LastDonationFilter(admin.SimpleListFilter):
 
     def lookups(self, request, model_admin):
       return (
-          ('1', _('1 year')),
-          ('2', _('2 years')),
-          ('2+', _('more than 2 years')),
+          ('0', _('In the last year')),
+          ('1', _('More than 1 year ago')),
+          ('2', _('More than 2 years ago')),
+          ('2+', _('More than 3 years')),
       )
 
     def queryset(self, request, queryset):
-      yrs = ( 360, 720, 1080, 1440)
+      if self.value() == '0':
+        return queryset.filter(
+          last_donation_date__gte=timezone.now() - timedelta(days=360)
+        )
       if self.value() == '1':
         return queryset.filter(
           last_donation_date__lte=timezone.now() - timedelta(days=360),
