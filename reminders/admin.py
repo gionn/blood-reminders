@@ -4,6 +4,8 @@ from django.contrib import admin
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.urls import path, reverse
+from django.utils import timezone
+from datetime import timedelta
 from django.utils.html import format_html
 from django.utils.translation import gettext_lazy as _
 
@@ -32,9 +34,39 @@ class NeedsReminderSentFilter(admin.SimpleListFilter):
         if self.value() == 'false':
             return donor_queryset.get_donors_without_reminders(queryset)
 
+class LastDonationFilter(admin.SimpleListFilter):
+    title = _('last donation')
+    parameter_name = 'last_donation_from'
+
+    def lookups(self, request, model_admin):
+      return (
+          ('1', _('1 year')),
+          ('2', _('2 years')),
+          ('2+', _('more than 2 years')),
+      )
+
+    def queryset(self, request, queryset):
+      yrs = ( 360, 720, 1080, 1440)
+      if self.value() == '1':
+        return queryset.filter(
+          last_donation_date__lte=timezone.now() - timedelta(days=360),
+          last_donation_date__gte=timezone.now() - timedelta(days=720)
+        )
+      if self.value() == '2':
+        return queryset.filter(
+          last_donation_date__lte=timezone.now() - timedelta(days=720),
+          last_donation_date__gte=timezone.now() - timedelta(days=1080)
+        )
+      if self.value() == '2+':
+        return queryset.filter(
+            last_donation_date__lte=timezone.now() - timedelta(days=1080)
+        )
 
 class DonorAdmin(admin.ModelAdmin):
-    list_filter = (NeedsReminderSentFilter,)
+    list_filter = (
+      NeedsReminderSentFilter,
+      LastDonationFilter,
+    )
     search_fields = ['name','tax_code']
     ordering = ['-created_at']
     list_display = ('name', 'gender', 'last_donation_type', 'last_donation_date', 'whatsapp_send')
