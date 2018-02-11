@@ -1,14 +1,14 @@
 from django.db.models import Max, Q
 from django.utils import timezone
 from datetime import timedelta
-from .models import BLOOD_TYPE, PLASMA_TYPE
+from .models import BLOOD_TYPE, PLASMA_TYPE, MULTIC_TYPE
 
 class DonorQuerySet():
     def get_base_queryset(self):
         male = Q(gender='M')
         female = Q(gender='F')
         blood_donation = Q(last_donation_type=BLOOD_TYPE)
-        plasma_donation = Q(last_donation_type=PLASMA_TYPE)
+        plasma_donation = Q(last_donation_type=PLASMA_TYPE) | Q(last_donation_type=MULTIC_TYPE)
         not_recent_donation_taken_male = Q(last_donation__lte=timezone.now() - timedelta(days=90))
         not_recent_donation_taken_female = Q(last_donation__lte=timezone.now() - timedelta(days=180))
         not_recent_plasma_donation_taken = Q(last_donation__lte=timezone.now() - timedelta(days=30))
