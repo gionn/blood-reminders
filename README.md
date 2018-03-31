@@ -23,21 +23,35 @@ This is my first django / python application, please be gently.
 * Sending reminders automatically based on a schedule
 * Sending reminders based on current blood availability (https://web2.e.toscana.it/crs/meteo/)
 
-## Usage (docker)
+## Usage (docker-composer)
+
+Configure the following environment variables (e.g. in a .env file):
+
+```
+SECRET_KEY=kahlaiwoopeex2ooQuoTei2ch
+DB_NAME=reminders
+DB_USER=reminders
+DB_PASS=to6oc9Ahl6oogei
+DB_HOST=db
+DB_PORT=5432
+DB_PATH=./pgdata
+```
 
 Build and run with docker-composer:
 
     docker-compose up --build
 
-Use prebuilt image:
+Access http://localhost:8000/admin/
 
-    docker run -e SECRET_KEY='a-random-secret-key' gionn/blood-reminders
+Default credentials:
 
-Access http://localhost/admin/
+* username: admin
+* password: changeme
 
-### Docker environment variables
+### Docker environment variables reference
 
 * SECRET_KEY: generate one [here](https://www.miniwebtool.com/django-secret-key-generator/)
 * ADMIN_USERNAME: the username of the first created superadmin user (default: admin)
 * ADMIN_PASSWORD: the password of the first created superadmin user (default: changeme)
 * ADMIN_EMAIL: the email of the first created superadmin user (default: admin@change.me)
+* DB_*: configures postgres container

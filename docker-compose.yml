@@ -2,8 +2,29 @@ version: "3"
 
 services:
   reminders:
+    container_name: reminders
+    restart: always
     build: ./
     volumes:
      - ./data:/data
     ports:
-      - "80:8000"
+      - "8000:8000"
+    environment:
+      DEBUG: "True"
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASS: ${DB_PASS}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: ${DB_PORT}
+      SECRET_KEY: ${SECRET_KEY}
+      ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+  db:
+    container_name: db
+    image: postgres:9.6.8-alpine
+    restart: always
+    volumes:
+      - ${DB_PATH}:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: ${DB_NAME}
+      POSTGRES_USER: ${DB_USER}
+      POSTGRES_PASSWORD: ${DB_PASS}

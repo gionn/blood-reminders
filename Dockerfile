@@ -15,6 +15,8 @@ VOLUME [ "/data" ]
 
 WORKDIR /usr/src/app
 
+RUN apk --update --no-cache add postgresql-libs python3-dev musl-dev postgresql-dev gcc
+
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt
 
