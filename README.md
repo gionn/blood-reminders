@@ -35,6 +35,7 @@ DB_PASS=to6oc9Ahl6oogei
 DB_HOST=db
 DB_PORT=5432
 DB_PATH=./pgdata
+ADMIN_PASSWORD=changeme
 ```
 
 Build and run with docker-composer:
