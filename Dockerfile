@@ -6,7 +6,7 @@ ENV GUNICORN_CMD_ARGS --bind=0.0.0.0 --workers=2
 ENV SECRET_KEY "override_this"
 ENV DEBUG "False"
 ENV SQLITE_PATH "/data/db.sqlite3"
-ENV STATIC_URL "http://gionn.net/blood-reminders/assets/master/"
+ENV STATIC_URL "https://gionn.net/blood-reminders/assets/master/"
 ENV ADMIN_USERNAME "admin"
 ENV ADMIN_PASSWORD "changeme"
 ENV ADMIN_EMAIL "admin@change.me"
