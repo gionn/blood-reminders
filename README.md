@@ -56,3 +56,8 @@ Default credentials:
 * ADMIN_PASSWORD: the password of the first created superadmin user (default: changeme)
 * ADMIN_EMAIL: the email of the first created superadmin user (default: admin@change.me)
 * DB_*: configures postgres container
+
+## Development
+
+    docker-compose -f docker-compose.develop.yml up
+    python manage.py runserver
