@@ -1,6 +1,7 @@
 # Fratres blood reminders
 
-[![Docker Build Status](https://img.shields.io/docker/build/gionn/blood-reminders.svg)]() [![Docker Automated build](https://img.shields.io/docker/automated/gionn/blood-reminders.svg)]()
+[![Docker Build Status](https://img.shields.io/docker/build/gionn/blood-reminders.svg)](https://hub.docker.com/r/gionn/blood-reminders/)
+[![Docker Automated build](https://img.shields.io/docker/automated/gionn/blood-reminders.svg)](https://hub.docker.com/r/gionn/blood-reminders/)
 
 A web application to remind people that they can do a new donation after a time frame.
 
