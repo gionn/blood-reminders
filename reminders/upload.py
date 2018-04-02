@@ -53,7 +53,7 @@ def handle_uploaded_donors_file(file):
 
 
 def handle_uploaded_donations_file(file):
-    csv_file = StringIO(file.read().decode())
+    csv_file = StringIO(file.read().decode('utf-8-sig'))
     reader = csv.DictReader(csv_file, delimiter=';')
     created = 0
     for row in reader:
