@@ -9,6 +9,8 @@ from reminders.models import Donation, Donor
 
 from .models import Donor
 
+from django_q.tasks import async
+
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
@@ -52,7 +54,12 @@ def handle_uploaded_donors_file(file):
     logger.warn('Finished importing: {} creation, {} update'.format(created, updated))
 
 
+
 def handle_uploaded_donations_file(file):
+  async(async_uploaded_donations_file,file)
+
+
+def async_uploaded_donations_file(file):
     csv_file = StringIO(file.read().decode('utf-8-sig'))
     reader = csv.DictReader(csv_file, delimiter=';')
     created = 0
