@@ -14,20 +14,59 @@ logger = logging.getLogger(__name__)
 
 
 def handle_uploaded_donors_file(file):
-    csv_file = StringIO(file.read().decode())
-    reader = csv.DictReader(csv_file, delimiter=';')
+    reader = __get_csv_reader(file)
+    for row in reader:
+      if 'Via' in row and 'Comune' in row and 'CAP' in row:
+        return __handle_address_book_file(__get_csv_reader(file))
+      if 'Soggetto' in row and 'Codice Fiscale' in row and 'Data Ultima Donazione' in row:
+        return __handle_donors_file(__get_csv_reader(file))
+      return
+
+
+def __get_csv_reader(file):
+    file.seek(0)
+    csv_file = StringIO(file.read().decode('utf-8-sig'))
+    return csv.DictReader(csv_file, delimiter=';')
+
+
+def __handle_address_book_file(reader):
+    count = 0
+    for row in reader:
+      csv_tax_code = row['Codice fiscale']
+      try:
+        existing_donor = Donor.objects.get(tax_code=csv_tax_code)
+        existing_donor.address_street = row['Via']
+        existing_donor.address_city = row['Comune']
+        existing_donor.address_province_code = row['Provincia']
+        existing_donor.address_postal_code = row['CAP']
+        existing_donor.address_state = row['Stato']
+        if not existing_donor.email:
+            existing_donor.email = row['e-mail']
+        if not existing_donor.phone or not existing_donor.phone.startswith('+'):
+            existing_donor.phone = convert_phone(row['Cellulare'])
+        existing_donor.save()
+        count += 1
+      except Donor.DoesNotExist:
+        logger.warn('Unable to find {} entry, skipping'.format(csv_tax_code))
+    logger.warn('Imported {} contacts from address book CSV'.format(count))
+
+
+def __handle_donors_file(reader):
     created = 0
     updated = 0
     for row in reader:
         csv_last_donation_type = get_donation_type(row['Tipo Ultima Donazione'])
         csv_last_donation_date = convert_date(row['Data Ultima Donazione'])
         csv_born_date = convert_date(row['Data Nascita'])
+        csv_enrollment_date = convert_date(row['Data iscrizione'])
         phone = convert_phone(row['Recapiti telefonici'])
 
         try:
             existing_donor = Donor.objects.get(tax_code=row['Codice Fiscale'])
             existing_donor.last_donation_type = csv_last_donation_type
             existing_donor.last_donation_date = csv_last_donation_date
+            existing_donor.enrollment_date = csv_enrollment_date
+            existing_donor.national_card_number = row['Tessera Nazionale']
             if not existing_donor.phone or not existing_donor.phone.startswith('+'):
                 existing_donor.phone = phone
             if not existing_donor.email:
@@ -46,10 +85,12 @@ def handle_uploaded_donors_file(file):
                 last_donation_date=csv_last_donation_date,
                 phone=phone,
                 email=row['Recapiti mail'],
+                national_card_number=row['Tessera Nazionale'],
+                enrollment_date=csv_enrollment_date
             )
             d.save()
             created += 1
-    logger.warn('Finished importing: {} creation, {} update'.format(created, updated))
+    logger.warn('Imported donors: {} created, {} updated'.format(created, updated))
 
 
 def handle_uploaded_donations_file(file):
@@ -89,8 +130,10 @@ def get_donation_type(input):
         output = 'P'
     elif input == 'Multicomponent':
         output = 'M'
+    elif input == '':
+        output = ''
     else:
-        logger.warn('Unrecognized value "{}"'.format(input))
+        logger.warn('Unrecognized donation type "{}"'.format(input))
     return output
 
 

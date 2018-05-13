@@ -39,6 +39,13 @@ class Donor(models.Model):
     suspension_reason = models.CharField(max_length=512, blank=True)
     phone = models.CharField(max_length=200, blank=True)
     email = models.CharField(max_length=200, blank=True)
+    national_card_number = models.CharField(max_length=200, blank=True)
+    enrollment_date = models.DateField(blank=True, null=True)
+    address_street = models.CharField(max_length=200, blank=True)
+    address_city = models.CharField(max_length=200, blank=True)
+    address_province_code = models.CharField(max_length=2, blank=True)
+    address_postal_code = models.CharField(max_length=5, blank=True)
+    address_state = models.CharField(max_length=200, blank=True)
     created_at = models.DateTimeField(default=timezone.now, editable=False)
     ordering = ['-created_at']
 
