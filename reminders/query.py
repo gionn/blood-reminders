@@ -38,3 +38,9 @@ class DonorQuerySet():
         return queryset.annotate(
             last_donation=Max('donation__done_at')
         ).exclude(restriction).distinct()
+
+    def get_donors_with_blood_type(self, queryset, value):
+        return queryset.filter(blood_type=value)
+
+    def get_donors_with_blood_rh(self, queryset, value):
+        return queryset.filter(blood_rh=value)

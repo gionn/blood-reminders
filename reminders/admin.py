@@ -17,6 +17,37 @@ from .upload import handle_uploaded_donations_file, handle_uploaded_donors_file
 
 logger = logging.getLogger(__name__)
 
+class BloodTypeFilter(admin.SimpleListFilter):
+    title = _('blood type')
+    parameter_name = 'blood'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('O', _('O')),
+            ('A', _('A')),
+            ('B', _('B')),
+            ('AB', _('AB')),
+        )
+
+    def queryset(self, request, queryset):
+        donor_queryset = DonorQuerySet()
+        if self.value():
+            return donor_queryset.get_donors_with_blood_type(queryset, self.value())
+
+class BloodRhFilter(admin.SimpleListFilter):
+    title = _('blood rh')
+    parameter_name = 'rh'
+
+    def lookups(self, request, model_admin):
+        return (
+            ('+', _('Positive')),
+            ('-', _('Negative')),
+        )
+
+    def queryset(self, request, queryset):
+        donor_queryset = DonorQuerySet()
+        if self.value():
+            return donor_queryset.get_donors_with_blood_rh(queryset, self.value())
 
 class NeedsReminderSentFilter(admin.SimpleListFilter):
     title = _('reminder needed')
@@ -73,6 +104,8 @@ class DonorAdmin(admin.ModelAdmin):
     list_filter = (
         NeedsReminderSentFilter,
         LastDonationFilter,
+        BloodTypeFilter,
+        BloodRhFilter,
     )
     search_fields = ['name', 'tax_code']
     ordering = ['-created_at']
