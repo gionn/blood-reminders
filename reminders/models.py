@@ -27,12 +27,12 @@ class Donor(models.Model):
         ('O', 'O'),
         ('AB', 'AB'),
         ('A', 'A'),
-        ('B', 'B')
+        ('B', 'B'),
     ))
     blood_rh = models.CharField(max_length=1, blank=True, null=True, choices=(
         ('+', 'Positive'),
         ('-', 'Negative'),
-        ('', 'undefined')
+        ('', 'undefined'),
     ))
     last_donation_date = models.DateField(default='1970-01-01', blank=True, null=True)
     suspension_date = models.DateField(blank=True, null=True)

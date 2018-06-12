@@ -14,7 +14,7 @@ logger = logging.getLogger(__name__)
 
 
 def handle_uploaded_donors_file(file):
-    csv_file = StringIO(file.read().decode())
+    csv_file = StringIO(file.read().decode('utf-8-sig'))
     reader = csv.DictReader(csv_file, delimiter=';')
     created = 0
     updated = 0
@@ -22,12 +22,16 @@ def handle_uploaded_donors_file(file):
         csv_last_donation_type = get_donation_type(row['Tipo Ultima Donazione'])
         csv_last_donation_date = convert_date(row['Data Ultima Donazione'])
         csv_born_date = convert_date(row['Data Nascita'])
+        csv_blood_type = convert_blood_type(row['Gruppo sanguigno'])
+        csv_blood_rh = convert_rh(row['Rh'])
         phone = convert_phone(row['Recapiti telefonici'])
 
         try:
             existing_donor = Donor.objects.get(tax_code=row['Codice Fiscale'])
             existing_donor.last_donation_type = csv_last_donation_type
             existing_donor.last_donation_date = csv_last_donation_date
+            existing_donor.blood_type = csv_blood_type
+            existing_donor.blood_rh = csv_blood_rh
             if not existing_donor.phone or not existing_donor.phone.startswith('+'):
                 existing_donor.phone = phone
             if not existing_donor.email:
@@ -40,8 +44,8 @@ def handle_uploaded_donors_file(file):
                 tax_code=row['Codice Fiscale'],
                 born_date=csv_born_date,
                 gender=row['Sesso'],
-                blood_type=row['Gruppo sanguigno'],
-                blood_rh=convert_rh(row['Rh']),
+                blood_type=csv_blood_type,
+                blood_rh=csv_blood_rh,
                 last_donation_type=csv_last_donation_type,
                 last_donation_date=csv_last_donation_date,
                 phone=phone,
@@ -89,6 +93,21 @@ def get_donation_type(input):
         output = 'P'
     elif input == 'Multicomponent':
         output = 'M'
+    else:
+        logger.warn('Unrecognized value "{}"'.format(input))
+    return output
+
+
+def convert_blood_type(input):
+    output = ''
+    if input == '0' or input == 'O':
+        output = 'O'
+    elif input == 'A':
+        output = 'A'
+    elif input == 'B':
+        output = 'B'
+    elif input == 'AB':
+        output = 'AB'
     else:
         logger.warn('Unrecognized value "{}"'.format(input))
     return output
