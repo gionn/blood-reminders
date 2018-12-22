@@ -12,3 +12,13 @@ services:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASS}
+  prom:
+    container_name: prometheus
+    image: prom/prometheus:v2.6.0
+    ports:
+      - '9090:9090'
+    volumes:
+      - './prometheus/:/etc/prometheus/'
+    command:
+      - '--config.file=/etc/prometheus/prometheus-dev.yml'
+      - '--storage.tsdb.path=/prometheus'
