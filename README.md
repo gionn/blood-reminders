@@ -60,5 +60,5 @@ Default credentials:
 
 ## Development
 
-    docker-compose -f docker-compose.develop.yml up
+    docker-compose -f docker-compose.dev.yml up
     python manage.py runserver
