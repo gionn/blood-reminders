@@ -49,15 +49,15 @@
         data: {
             datasets: [
             {
-                label: 'Donazioni al mese donne',
+                label: 'Femmine',
                 data: [{% for t, v in donations_data_female %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
             },
             {
-                label: 'Donazioni al mese uomini',
+                label: 'Maschi',
                 data: [{% for t, v in donations_data_male %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
             },
             {
-                label: 'Donazioni al mese',
+                label: 'Totali',
                 data: [{% for t, v in donations_data %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
             },
             ],
