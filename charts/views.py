@@ -33,6 +33,14 @@ class ChartsView(View):
                 last_donation_date__gt=(timezone.now() + relativedelta(months=-12)).replace(day=1, hour=0, minute=0)
             ).values('blood_type','blood_rh').annotate(count=Count('id')).values_list('blood_type','blood_rh','count').order_by('-count')
 
+        age_young_last_year = self.donor_age_count(0, 28)
+
+        age_junior_last_year = self.donor_age_count(28, 39)
+
+        age_senior_last_year = self.donor_age_count(39, 50)
+
+        age_elder_last_year = self.donor_age_count(50, 99)
+
         template = loader.get_template('charts/index.html')
         context = {
             'last_update': last_update,
@@ -41,6 +49,7 @@ class ChartsView(View):
             'donations_data_female': donations_data_female,
             'donations_yearly_data': donations_yearly_data,
             'blood_type_last_year': blood_type_last_year,
+            'age_last_year': [age_young_last_year, age_junior_last_year, age_senior_last_year, age_elder_last_year]
         }
         return HttpResponse(template.render(context, request))
 
@@ -50,3 +59,10 @@ class ChartsView(View):
             ).filter(filter_args).annotate(
                 month=TruncMonth('done_at')
             ).values('month').annotate(count=Count('id')).values_list('month','count').order_by('month')
+
+    def donor_age_count(self, from_age, to_age):
+        return Donor.objects.filter(
+                last_donation_date__gt=(timezone.now() + relativedelta(months=-12)).replace(day=1, hour=0, minute=0),
+                born_date__lt=(timezone.now() + relativedelta(years=-from_age)),
+                born_date__gte=(timezone.now() + relativedelta(years=-to_age))
+            ).count()

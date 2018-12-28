@@ -39,6 +39,10 @@
                 <h3>Tipo sangue degli ultimi 12 mesi</h3>
                 <canvas id="blood_type_last_year"></canvas>
             </div>
+            <div class="col-sm">
+                <h3>Età degli ultimi 12 mesi</h3>
+                <canvas id="age_last_year"></canvas>
+            </div>
         </div>
     </div>
     
@@ -128,6 +132,26 @@
                 data: [{% for type, rh, count in blood_type_last_year %}{{count}},{% endfor %}]
             }],
             labels: [{% for type, rh, count in blood_type_last_year %}'{{type}}{{rh}}',{% endfor %}]
+        },
+        options: {
+                plugins: {
+                    colorschemes: {
+                        scheme: 'brewer.Dark2-8'
+                    }
+                },
+        }
+    });
+    </script>
+
+    <script>
+    var ctx = document.getElementById("age_last_year").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [{% for i in age_last_year %}{{i}},{% endfor %}]
+            }],
+            labels: ['<28','28<x<39','39<x<50','>50']
         },
         options: {
                 plugins: {
