@@ -1,0 +1,25 @@
+version: 2
+jobs:
+ build:
+   machine: true
+   steps:
+     - checkout
+     - run:
+        name: Hub login
+        command: |
+         docker login -u $DOCKER_USER -p $DOCKER_PASS
+
+     # build the application image
+     - run:
+        name: Build
+        command: docker build -t gionn/blood-reminders:latest .
+
+     # deploy the image
+     - run:
+        name: Deploy
+        command: |
+          if [ "${CIRCLE_BRANCH}" == "master" ]; then
+            docker push gionn/blood-reminders:latest
+            docker tag gionn/blood-reminders:latest gionn/blood-reminders:$CIRCLE_BUILD_NUM
+            docker push gionn/blood-reminders:$CIRCLE_BUILD_NUM
+          fi
