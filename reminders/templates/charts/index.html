@@ -34,6 +34,12 @@
                 <canvas id="donations_yearly"></canvas>
             </div>
         </div>
+        <div class="row mt-3">
+            <div class="col-sm">
+                <h3>Tipo sangue nei donatori attivi degli ultimi 12 mesi</h3>
+                <canvas id="blood_type_last_year"></canvas>
+            </div>
+        </div>
     </div>
     
     <script>
@@ -109,6 +115,27 @@
                     }
                 },
             }
+    });
+    </script>
+
+
+    <script>
+    var ctx = document.getElementById("blood_type_last_year").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [{% for type, rh, count in blood_type_last_year %}{{count}},{% endfor %}]
+            }],
+            labels: [{% for type, rh, count in blood_type_last_year %}'{{type}}{{rh}}',{% endfor %}]
+        },
+        options: {
+                plugins: {
+                    colorschemes: {
+                        scheme: 'brewer.Dark2-8'
+                    }
+                },
+        }
     });
     </script>
 

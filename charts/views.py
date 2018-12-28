@@ -6,7 +6,7 @@ from django.utils.timezone import make_aware
 from django.utils.dateparse import parse_date
 from django.db.models import Count, Q
 from django.db.models.functions import TruncMonth, TruncYear
-from reminders.models import Donation
+from reminders.models import Donation, Donor
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
 
@@ -29,6 +29,10 @@ class ChartsView(View):
                 year=TruncYear('done_at')
             ).values('year').annotate(count=Count('id')).values_list('year','count').order_by('year')
 
+        blood_type_last_year = Donor.objects.filter(
+                last_donation_date__gt=(timezone.now() + relativedelta(months=-12)).replace(day=1, hour=0, minute=0)
+            ).values('blood_type','blood_rh').annotate(count=Count('id')).values_list('blood_type','blood_rh','count').order_by('-count')
+
         template = loader.get_template('charts/index.html')
         context = {
             'last_update': last_update,
@@ -36,6 +40,7 @@ class ChartsView(View):
             'donations_data_male': donations_data_male,
             'donations_data_female': donations_data_female,
             'donations_yearly_data': donations_yearly_data,
+            'blood_type_last_year': blood_type_last_year,
         }
         return HttpResponse(template.render(context, request))
 
