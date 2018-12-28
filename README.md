@@ -16,6 +16,7 @@ This is my first django / python application, please be gently.
 * Donor management (personal data, contact information, blood type) [screenshot 1](screenshots/donors-list.jpeg) [screenshot 2](screenshots/donors-edit-1.jpeg) [screenshot 3](screenshots/donors-edit-2.jpeg)
 * Donations management
 * Reminders management (not really sending any reminder) [screenshot](screenshots/create-reminder.jpeg)
+* Public charts page with Chart.js [screenshot](screenshots/charts.jpeg)
 
 ## Roadmap
 
