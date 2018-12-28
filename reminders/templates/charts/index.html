@@ -40,12 +40,20 @@
     var myChart = new Chart(ctx, {
         type: 'line',
         data: {
-            datasets: [{
+            datasets: [
+            {
+                label: 'Donazioni al mese donne',
+                data: [{% for t, v in donations_data_female %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
+            },
+            {
+                label: 'Donazioni al mese uomini',
+                data: [{% for t, v in donations_data_male %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
+            },
+            {
                 label: 'Donazioni al mese',
-                backgroundColor: 'rgb(255, 99, 132)',
-                borderColor: 'rgb(255, 99, 132)',
-                data: [{% for t, v in donations_data %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}]
-            }],
+                data: [{% for t, v in donations_data %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
+            },
+            ],
         },
         options: {
                 scales: {
