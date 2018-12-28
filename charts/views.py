@@ -24,7 +24,7 @@ class ChartsView(View):
         donations_data_female = self.donations_last_year(Q(donor__gender='F'))
 
         donations_yearly_data = Donation.objects.filter(
-                done_at__gt=datetime.datetime.now() - datetime.timedelta(weeks=52*10)
+                done_at__gt=make_aware(datetime(now.year - 10, 1, 1))
             ).annotate(
                 year=TruncYear('done_at')
             ).values('year').annotate(count=Count('id')).values_list('year','count').order_by('year')
