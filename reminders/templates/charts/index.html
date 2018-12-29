@@ -1,3 +1,5 @@
+{% load i18n %}
+{% load app_filters %}
 <!doctype html>
 <html lang="en">
   <head>
@@ -13,21 +15,20 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-colorschemes@latest/dist/chartjs-plugin-colorschemes.min.js"></script>
 
-    <title>Charts</title>
+    <title>{% trans "Stats for" %} {{ site_name }}</title>
   </head>
   <body>
-  {% load app_filters %}
 
     <div class="container">
         <div class="row">
             <div class="col-sm">
-                <h1>Statistiche donazioni e donatori Fratres Montecarlo</h1>
-                Ultimo aggiornamento: {{ last_update|date:'Y-m-d' }}
+                <h1>{% trans "Stats for" %} {{ site_name }}</h1>
+                {% trans "Last update" %}: {{ last_update|date:'Y-m-d' }}
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>Donazioni questo mese</h3>
+                <h3>{% trans "Last month donations" %}</h3>
                 <canvas id="donations_this_month"></canvas>
             </div>
             <div class="col-sm">
@@ -37,21 +38,21 @@
         </div>
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>Donazioni ultimi 12 mesi</h3>
+                <h3>{% trans "Last 12 months donations" %}</h3>
                 <canvas id="donations"></canvas>
             </div>
             <div class="col-sm">
-                <h3>Donazioni ultimi 10 anni</h3>
+                <h3>{% trans "Last 10 years donations" %}</h3>
                 <canvas id="donations_yearly"></canvas>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>Tipo sangue degli ultimi 12 mesi</h3>
+                <h3>{% trans "Last 12 months donation types" %}</h3>
                 <canvas id="blood_type_last_year"></canvas>
             </div>
             <div class="col-sm">
-                <h3>Età donatori degli ultimi 12 mesi</h3>
+                <h3>{% trans "Last 12 months donors age" %}</h3>
                 <canvas id="age_last_year"></canvas>
             </div>
         </div>
@@ -64,15 +65,15 @@
         data: {
             datasets: [
             {
-                label: 'Femmine',
+                label: '{% trans "Female" %}',
                 data: [{% for t, v in donations_data_female %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
             },
             {
-                label: 'Maschi',
+                label: '{% trans "Male" %}',
                 data: [{% for t, v in donations_data_male %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
             },
             {
-                label: 'Totali',
+                label: '{% trans "Total" %}',
                 data: [{% for t, v in donations_data %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
             },
             ],
@@ -106,7 +107,7 @@
         type: 'line',
         data: {
             datasets: [{
-                label: 'Donazioni all\'anno',
+                label: '{% trans "Donations" %}',
                 data: [{% for t, v in donations_yearly_data %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}]
             }],
         },
@@ -187,7 +188,7 @@
             },
             {% endfor %}
             ],
-            labels: ['Donations']
+            labels: ['{% trans "Donations" %}']
         },
         options: {
             plugins: {

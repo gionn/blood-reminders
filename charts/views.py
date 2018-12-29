@@ -9,6 +9,7 @@ from django.db.models.functions import TruncMonth, TruncYear
 from reminders.models import Donation, Donor, donation_type
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+from django.conf import settings
 
 class ChartsView(View):
 
@@ -43,6 +44,7 @@ class ChartsView(View):
 
         template = loader.get_template('charts/index.html')
         context = {
+            'site_name': settings.SITE_NAME,
             'donation_type': dict(donation_type),
             'last_update': last_update,
             'donations_data': donations_data,
