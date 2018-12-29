@@ -16,12 +16,23 @@
     <title>Charts</title>
   </head>
   <body>
+  {% load app_filters %}
 
     <div class="container">
         <div class="row">
             <div class="col-sm">
                 <h1>Statistiche donazioni e donatori Fratres Montecarlo</h1>
                 Ultimo aggiornamento: {{ last_update|date:'Y-m-d' }}
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-sm">
+                <h3>Donazioni questo mese</h3>
+                <canvas id="donations_this_month"></canvas>
+            </div>
+            <div class="col-sm">
+                <h3></h3>
+                <canvas id=""></canvas>
             </div>
         </div>
         <div class="row mt-3">
@@ -67,24 +78,24 @@
             ],
         },
         options: {
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        time: {
-                            unit: 'month'
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                },
-                plugins: {
-                    colorschemes: {
-                        scheme: 'brewer.PuOr11'
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'month'
                     }
-                },
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+            plugins: {
+                colorschemes: {
+                    scheme: 'brewer.PuOr11'
+                }
+            },
             }
     });
     </script>
@@ -100,24 +111,24 @@
             }],
         },
         options: {
-                scales: {
-                    xAxes: [{
-                        type: 'time',
-                        time: {
-                            unit: 'year'
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            beginAtZero:true
-                        }
-                    }]
-                },
-                plugins: {
-                    colorschemes: {
-                        scheme: 'brewer.PuOr11'
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'year'
                     }
-                },
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+            plugins: {
+                colorschemes: {
+                    scheme: 'brewer.PuOr11'
+                }
+            },
             }
     });
     </script>
@@ -134,11 +145,11 @@
             labels: [{% for type, rh, count in blood_type_last_year %}'{{type}}{{rh}}',{% endfor %}]
         },
         options: {
-                plugins: {
-                    colorschemes: {
-                        scheme: 'brewer.Dark2-8'
-                    }
-                },
+            plugins: {
+                colorschemes: {
+                    scheme: 'brewer.Dark2-8'
+                }
+            },
         }
     });
     </script>
@@ -154,11 +165,44 @@
             labels: ['<28','28<x<39','39<x<50','>50']
         },
         options: {
-                plugins: {
-                    colorschemes: {
-                        scheme: 'brewer.Dark2-8'
-                    }
-                },
+            plugins: {
+                colorschemes: {
+                    scheme: 'brewer.Dark2-8'
+                }
+            },
+        }
+    });
+    </script>
+
+    <script>
+    var ctx = document.getElementById("donations_this_month").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            datasets: [
+            {% for i in donations_this_month %}
+            {
+                label: '{{donation_type|get_item:i.donation_type}}',
+                data: [{{i.count}}]
+            },
+            {% endfor %}
+            ],
+            labels: ['Donations']
+        },
+        options: {
+            plugins: {
+                colorschemes: {
+                    scheme: 'brewer.Set1-3'
+                }
+            },
+            scales: {
+                xAxes: [{
+                    stacked: true
+                }],
+                yAxes: [{
+                    stacked: true
+                }]
+            }
         }
     });
     </script>
