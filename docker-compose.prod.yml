@@ -6,7 +6,7 @@ services:
     restart: always
     image: gionn/blood-reminders:latest
     volumes:
-     - ./data:/data
+      - ./data:/data
     ports:
       - "8000:8000"
     environment:
