@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2018-12-29 13:12+0100\n"
-"PO-Revision-Date: 2018-12-29 11:05+0100\n"
+"POT-Creation-Date: 2019-01-12 11:43+0100\n"
+"PO-Revision-Date: 2019-01-12 11:43+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -88,7 +88,7 @@ msgstr "Gestionale donatori di sangue"
 
 #: reminders/apps.py:7
 msgid "donors management"
-msgstr "Gestionale donatori"
+msgstr "gestionale donatori"
 
 #: reminders/models.py:11
 msgid "Blood"
@@ -118,11 +118,11 @@ msgstr "data di nascita"
 msgid "gender"
 msgstr "sesso"
 
-#: reminders/models.py:22 reminders/templates/charts/index.html:72
+#: reminders/models.py:22 reminders/templates/charts/index.html:82
 msgid "Male"
 msgstr "Maschio"
 
-#: reminders/models.py:23 reminders/templates/charts/index.html:68
+#: reminders/models.py:23 reminders/templates/charts/index.html:78
 msgid "Female"
 msgstr "Femmina"
 
@@ -201,35 +201,63 @@ msgstr "Aggiungi %(name)s"
 msgid "Stats for"
 msgstr "Statistiche per"
 
-#: reminders/templates/charts/index.html:26
+#: reminders/templates/charts/index.html:27
 msgid "Last update"
 msgstr "Ultimo aggiornamento"
 
-#: reminders/templates/charts/index.html:31
-msgid "Last month donations"
-msgstr "Donazioni mese corrente"
+#: reminders/templates/charts/index.html:33
+#, python-format
+msgid "%(year)s donations and wanted"
+msgstr "Donazioni %(year)s e obiettivi"
 
-#: reminders/templates/charts/index.html:41
+#: reminders/templates/charts/index.html:37
+#, python-format
+msgid "Road to %(donations_this_year_expected)s donations"
+msgstr "Obbiettivo %(donations_this_year_expected)s donazioni"
+
+#: reminders/templates/charts/index.html:43
 msgid "Last 12 months donations"
 msgstr "Donazioni ultimi 12 mesi"
 
-#: reminders/templates/charts/index.html:45
+#: reminders/templates/charts/index.html:47
 msgid "Last 10 years donations"
 msgstr "Donazioni ultimi 10 anni"
 
-#: reminders/templates/charts/index.html:51
-msgid "Last 12 months donation types"
-msgstr "Tipo sangue degli ultimi 12 mesi"
+#: reminders/templates/charts/index.html:53
+msgid "Last 12 months blood types"
+msgstr "Gruppi sanguigni degli ultimi 12 mesi"
 
-#: reminders/templates/charts/index.html:55
+#: reminders/templates/charts/index.html:57
+msgid "Last 12 months donations type"
+msgstr "Tipologia donazioni degli ultimi 12 mesi"
+
+#: reminders/templates/charts/index.html:63
 msgid "Last 12 months donors age"
 msgstr "Età donatori degli ultimi 12 mesi"
 
-#: reminders/templates/charts/index.html:76
+#: reminders/templates/charts/index.html:86
 msgid "Total"
 msgstr "Totale"
 
-#: reminders/templates/charts/index.html:110
-#: reminders/templates/charts/index.html:191
+#: reminders/templates/charts/index.html:121
+msgid "Actual donations"
+msgstr "Donazioni effettive"
+
+#: reminders/templates/charts/index.html:129
+msgid "Estimated donations"
+msgstr "Donazioni stimate"
+
+#: reminders/templates/charts/index.html:162
+msgid "Done"
+msgstr "Effettuate"
+
+#: reminders/templates/charts/index.html:162
+msgid "Remaining"
+msgstr "Rimanenti"
+
+#: reminders/templates/charts/index.html:180
 msgid "Donations"
 msgstr "Donazioni"
+
+#~ msgid "Projections"
+#~ msgstr "Stime"

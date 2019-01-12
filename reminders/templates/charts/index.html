@@ -23,17 +23,19 @@
         <div class="row">
             <div class="col-sm">
                 <h1>{% trans "Stats for" %} {{ site_name }}</h1>
-                {% trans "Last update" %}: {{ last_update|date:'Y-m-d' }}
+                <p>
+                    {% trans "Last update" %}: {{ last_update|date:'Y-m-d' }}
+                </p>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>{% trans "Last month donations" %}</h3>
-                <canvas id="donations_this_month"></canvas>
+                <h3>{% blocktrans %}{{ year }} donations and wanted{% endblocktrans %}</h3>
+                <canvas id="donations_this_year"></canvas>
             </div>
             <div class="col-sm">
-                <h3></h3>
-                <canvas id=""></canvas>
+                <h3>{% blocktrans %}Road to {{donations_this_year_expected}} donations{% endblocktrans %}</h3>
+                <canvas id="donations_this_year_progress"></canvas>
             </div>
         </div>
         <div class="row mt-3">
@@ -48,12 +50,20 @@
         </div>
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>{% trans "Last 12 months donation types" %}</h3>
+                <h3>{% trans "Last 12 months blood types" %}</h3>
                 <canvas id="blood_type_last_year"></canvas>
             </div>
             <div class="col-sm">
+                <h3>{% trans "Last 12 months donations type" %}</h3>
+                <canvas id="donations_last_year_by_type"></canvas>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-sm">
                 <h3>{% trans "Last 12 months donors age" %}</h3>
                 <canvas id="age_last_year"></canvas>
+            </div>
+            <div class="col-sm">
             </div>
         </div>
     </div>
@@ -88,16 +98,76 @@
                 }],
                 yAxes: [{
                     ticks: {
-                        beginAtZero:true
+                        beginAtZero: true
                     }
                 }]
             },
             plugins: {
                 colorschemes: {
-                    scheme: 'brewer.PuOr11'
+                    scheme: 'brewer.Set1-3'
                 }
             },
             }
+    });
+    </script>
+
+    <script>
+    var ctx = document.getElementById("donations_this_year").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            datasets: [
+            {
+                label: '{% trans "Actual donations" %}',
+                data: [{% for t, v in donations_data_this_year %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
+                pointBorderColor: "#c22725",
+                pointBackgroundColor: "#950b0b",
+                borderColor: "#aa0705",
+                backgroundColor: "#D93138",
+            },
+            {
+                label: '{% trans "Estimated donations" %}',
+                data: [{% for t, v in donations_data_this_year_projection %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
+                borderColor: "#3e95cd",
+                fill: false,
+            },
+            ],
+        },
+        options: {
+            scales: {
+                xAxes: [{
+                    type: 'time',
+                    time: {
+                        unit: 'month'
+                    }
+                }],
+                yAxes: [{
+                    ticks: {
+                        beginAtZero:true
+                    }
+                }]
+            },
+            }
+    });
+    </script>
+
+    <script>
+    var ctx = document.getElementById("donations_this_year_progress").getContext('2d');
+    var myChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            datasets: [{
+                data: [{{ donations_this_year_count }}, {{ donations_this_year_remaining }}]
+            }],
+            labels: ['{% trans "Done" %}','{% trans "Remaining" %}']
+        },
+        options: {
+            plugins: {
+                colorschemes: {
+                    scheme: 'brewer.Dark2-8'
+                }
+            },
+        }
     });
     </script>
 
@@ -127,7 +197,7 @@
             },
             plugins: {
                 colorschemes: {
-                    scheme: 'brewer.PuOr11'
+                    scheme: 'brewer.PRGn3'
                 }
             },
             }
@@ -176,33 +246,20 @@
     </script>
 
     <script>
-    var ctx = document.getElementById("donations_this_month").getContext('2d');
+    var ctx = document.getElementById("donations_last_year_by_type").getContext('2d');
     var myChart = new Chart(ctx, {
-        type: 'bar',
+        type: 'doughnut',
         data: {
-            datasets: [
-            {% for i in donations_this_month %}
-            {
-                label: '{{donation_type|get_item:i.donation_type}}',
-                data: [{{i.count}}]
-            },
-            {% endfor %}
-            ],
-            labels: ['{% trans "Donations" %}']
+            datasets: [{
+                data: [{% for element in donations_last_year_by_type %}{{element.count}},{% endfor %}]
+            }],
+            labels: [{% for element in donations_last_year_by_type %}'{{donation_type|get_item:element.donation_type}}',{% endfor %}]
         },
         options: {
             plugins: {
                 colorschemes: {
                     scheme: 'brewer.Set1-3'
                 }
-            },
-            scales: {
-                xAxes: [{
-                    stacked: true
-                }],
-                yAxes: [{
-                    stacked: true
-                }]
             }
         }
     });

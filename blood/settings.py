@@ -130,3 +130,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 SITE_NAME = 'Fratres Montecarlo'
+
+# Comma-separated integers to draw a 'wanted donations' line in monthly estimated donations charts
+DONATIONS_PROJECTION = os.environ.get('DONATIONS_PROJECTION', '10,10,10,10,10,10,10,10,10,10,10,10')

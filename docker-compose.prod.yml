@@ -18,6 +18,7 @@ services:
       DB_PORT: ${DB_PORT}
       SECRET_KEY: ${SECRET_KEY}
       ADMIN_PASSWORD: ${ADMIN_PASSWORD}
+      DONATIONS_PROJECTION: ${DONATIONS_PROJECTION}
   db:
     container_name: db
     image: postgres:9.6.8-alpine
