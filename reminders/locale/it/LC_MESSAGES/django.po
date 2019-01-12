@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2019-01-12 11:43+0100\n"
-"PO-Revision-Date: 2019-01-12 11:43+0100\n"
+"PO-Revision-Date: 2019-01-12 21:58+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -24,19 +24,19 @@ msgstr "gruppo sanguigno"
 
 #: reminders/admin.py:26
 msgid "O"
-msgstr ""
+msgstr "O"
 
 #: reminders/admin.py:27
 msgid "A"
-msgstr ""
+msgstr "A"
 
 #: reminders/admin.py:28
 msgid "B"
-msgstr ""
+msgstr "B"
 
 #: reminders/admin.py:29
 msgid "AB"
-msgstr ""
+msgstr "AB"
 
 #: reminders/admin.py:38 reminders/models.py:33
 msgid "blood rh"
@@ -208,7 +208,7 @@ msgstr "Ultimo aggiornamento"
 #: reminders/templates/charts/index.html:33
 #, python-format
 msgid "%(year)s donations and wanted"
-msgstr "Donazioni %(year)s e obiettivi"
+msgstr "Donazioni %(year)s e obbiettivi"
 
 #: reminders/templates/charts/index.html:37
 #, python-format
