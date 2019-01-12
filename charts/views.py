@@ -50,6 +50,7 @@ class ChartsView(View):
         template = loader.get_template('charts/index.html')
         context = {
             'site_name': settings.SITE_NAME,
+            'analytics_code': settings.GA_CODE,
             'donation_type': dict(donation_type),
             'last_update': last_update,
             'year': self.now.year,

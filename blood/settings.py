@@ -129,7 +129,11 @@ STATIC_URL = os.environ.get('STATIC_URL', '/static/')
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
+# Name of the site, shown on charts page
 SITE_NAME = 'Fratres Montecarlo'
+
+# Google Analytics code to be included on charts page
+GA_CODE = os.environ.get('GA_CODE')
 
 # Comma-separated integers to draw a 'wanted donations' line in monthly estimated donations charts
 DONATIONS_PROJECTION = os.environ.get('DONATIONS_PROJECTION', '10,10,10,10,10,10,10,10,10,10,10,10')
