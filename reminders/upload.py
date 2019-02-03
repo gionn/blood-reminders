@@ -57,11 +57,13 @@ def handle_uploaded_donors_file(file):
 
 
 def handle_uploaded_donations_file(file):
+    last_tracked_donation = get_last_donation_date()
     csv_file = StringIO(file.read().decode('utf-8-sig'))
     reader = csv.DictReader(csv_file, delimiter=';')
     created = 0
     for row in reader:
         csv_donation_date = convert_date(row['Data'])
+        if csv_donation_date < last_tracked_donation: continue
         csv_born_date = convert_date(row['Data Nascita'])
         try:
             existing_donor = Donor.objects.get(name=row['Donatore'], born_date=csv_born_date)
@@ -71,6 +73,7 @@ def handle_uploaded_donations_file(file):
             )
             continue
         except Donor.DoesNotExist:
+            logger.warn('''{} doesn't exists?'''.format(row['Donatore']))
             continue
         except Donation.DoesNotExist:
             existing_donor = Donor.objects.get(name=row['Donatore'], born_date=csv_born_date)
@@ -136,3 +139,10 @@ def convert_phone(string):
     if phone and not phone.startswith('+'):
         phone = '+39' + phone
     return phone
+
+def get_last_donation_date():
+    query = Donation.objects.order_by('-done_at')
+    if query:
+        return query[0].done_at
+    else:
+        return timezone.make_aware(datetime(1900,1,1))
