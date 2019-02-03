@@ -26,9 +26,9 @@ This is my first django / python application, please be gently.
 
 ## Usage (docker-composer)
 
-Configure the following environment variables (e.g. in a .env file):
+Configure the following environment variables in a .env file:
 
-```
+```bash
 SECRET_KEY=kahlaiwoopeex2ooQuoTei2ch
 DB_NAME=reminders
 DB_USER=reminders
@@ -37,6 +37,9 @@ DB_HOST=db
 DB_PORT=5432
 DB_PATH=./pgdata
 ADMIN_PASSWORD=changeme
+ADMIN_PASSWORD=changeme
+ADMIN_USERNAME=admin
+ADMIN_EMAIL=me@gionn.net
 ```
 
 Build and run with docker-composer:
@@ -57,8 +60,20 @@ Default credentials:
 * ADMIN_PASSWORD: the password of the first created superadmin user (default: changeme)
 * ADMIN_EMAIL: the email of the first created superadmin user (default: admin@change.me)
 * DB_*: configures postgres container
+* DONATIONS_PROJECTION: in the charts page, used by the first chart to draw a line as a target donation for every mounth (comma separated integers)
 
 ## Development
 
-    docker-compose -f docker-compose.dev.yml up
-    python manage.py runserver
+```bash
+# Dependencies
+docker-compose -f docker-compose.dev.yml up -d
+
+# Upgrade the database schema
+python manage.py migrate
+
+# Creates an admin account
+python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('${ADMIN_USERNAME}', '${ADMIN_EMAIL}', '${ADMIN_PASSWORD}')" || true &> /dev/null
+
+# go django go
+python manage.py runserver
+```
