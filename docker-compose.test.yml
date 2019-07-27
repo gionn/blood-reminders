@@ -15,7 +15,7 @@ services:
       POSTGRES_PASSWORD: ${DB_PASS}
 
   test:
-    command: sh -c 'sleep 3 && python -Wa manage.py test'
+    command: sh -c 'sleep 5 && python -Wa manage.py test'
     container_name: tests
     image: gionn/blood-reminders:latest
     environment:
