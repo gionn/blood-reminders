@@ -1,5 +1,5 @@
 from django.test import TestCase
-from reminders.models import Donor, Donation
+from reminders.models import Donor, Donation, BLOOD_TYPE
 from reminders.query import DonorQuerySet
 from django.utils import timezone
 from datetime import timedelta
@@ -14,22 +14,22 @@ class DonorTestCase(TestCase):
         self.assertEqual(self.queryset.get_donors_without_reminders(self.base).count(), 0)
 
     def test_male_donor_with_old_blood_donations(self):
-        donor = self.donor('male blood', 'M', 'S')
-        self.donation(donor, 100, 'S')
-        self.donation(donor, 365, 'S')
+        donor = self.donor('male blood', 'M', BLOOD_TYPE)
+        self.donation(donor, 100, BLOOD_TYPE)
+        self.donation(donor, 365, BLOOD_TYPE)
         self.assertEqual(self.queryset.get_donors_with_reminders(self.base).count(), 1)
 
     def test_female_donor_with_old_blood_donations(self):
-        donor = self.donor('female blood', 'F', 'S')
-        self.donation(donor, 181, 'S')
-        self.donation(donor, 365, 'S')
+        donor = self.donor('female blood', 'F', BLOOD_TYPE)
+        self.donation(donor, 181, BLOOD_TYPE)
+        self.donation(donor, 365, BLOOD_TYPE)
         self.assertEqual(self.queryset.get_donors_with_reminders(self.base).count(), 1)
 
     def test_male_donor_with_recent_blood_donations(self):
-        donor = self.donor('male blood', 'M', 'S')
-        self.donation(donor, 10, 'S')
-        self.donation(donor, 100, 'S')
-        self.donation(donor, 365, 'S')
+        donor = self.donor('male blood', 'M', BLOOD_TYPE)
+        self.donation(donor, 10, BLOOD_TYPE)
+        self.donation(donor, 100, BLOOD_TYPE)
+        self.donation(donor, 365, BLOOD_TYPE)
         self.assertEqual(self.queryset.get_donors_with_reminders(self.base).count(), 0)
 
     def donor(self, name, gender, donation_type):
