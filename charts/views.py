@@ -47,6 +47,10 @@ class ChartsView(View):
         donations_this_year_expected = 400
         donations_this_year_progress = int(donations_this_year_count * 100 / donations_this_year_expected)
 
+        donations_this_year_remaining = 0
+        if (donations_this_year_count < donations_this_year_expected):
+            donations_this_year_remaining = donations_this_year_expected - donations_this_year_count
+
         template = loader.get_template('charts/index.html')
         context = {
             'site_name': settings.SITE_NAME,
