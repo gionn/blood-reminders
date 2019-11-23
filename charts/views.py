@@ -69,7 +69,7 @@ class ChartsView(View):
             'donations_data_this_year': self.donations_this_year(Q()),
             'donations_this_year_count': donations_this_year_count,
             'donations_this_year_expected': donations_this_year_expected,
-            'donations_this_year_remaining': donations_this_year_expected - donations_this_year_count,
+            'donations_this_year_remaining': donations_this_year_remaining,
             'donations_this_year_progress': donations_this_year_progress,
             'donations_data_this_year_projection': self.donations_this_year_projection(),
         }
