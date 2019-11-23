@@ -63,7 +63,8 @@ def handle_uploaded_donations_file(file):
     created = 0
     for row in reader:
         csv_donation_date = convert_date(row['Data'])
-        if csv_donation_date < last_tracked_donation: continue
+        if csv_donation_date < last_tracked_donation:
+            continue
         csv_born_date = convert_date(row['Data Nascita'])
         try:
             existing_donor = Donor.objects.get(name=row['Donatore'], born_date=csv_born_date)
@@ -140,9 +141,10 @@ def convert_phone(string):
         phone = '+39' + phone
     return phone
 
+
 def get_last_donation_date():
     query = Donation.objects.order_by('-done_at')
     if query:
         return query[0].done_at
     else:
-        return timezone.make_aware(datetime(1900,1,1))
+        return timezone.make_aware(datetime(1900, 1, 1))

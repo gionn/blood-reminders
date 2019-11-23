@@ -17,6 +17,7 @@ from .upload import handle_uploaded_donations_file, handle_uploaded_donors_file
 
 logger = logging.getLogger(__name__)
 
+
 class BloodTypeFilter(admin.SimpleListFilter):
     title = _('blood type')
     parameter_name = 'blood'
@@ -34,6 +35,7 @@ class BloodTypeFilter(admin.SimpleListFilter):
         if self.value():
             return donor_queryset.get_donors_with_blood_type(queryset, self.value())
 
+
 class BloodRhFilter(admin.SimpleListFilter):
     title = _('blood rh')
     parameter_name = 'rh'
@@ -48,6 +50,7 @@ class BloodRhFilter(admin.SimpleListFilter):
         donor_queryset = DonorQuerySet()
         if self.value():
             return donor_queryset.get_donors_with_blood_rh(queryset, self.value())
+
 
 class NeedsReminderSentFilter(admin.SimpleListFilter):
     title = _('reminder needed')
