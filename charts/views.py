@@ -45,7 +45,7 @@ class ChartsView(View):
         age_elder_last_year = self.donor_age_count(50, 99)
 
         donations_this_year_count = self.donations_this_year_count()
-        donations_this_year_expected = 400
+        donations_this_year_expected = int(settings.DONATIONS_EXPECTED)
         donations_this_year_progress = int(donations_this_year_count * 100 / donations_this_year_expected)
 
         donations_this_year_remaining = 0
