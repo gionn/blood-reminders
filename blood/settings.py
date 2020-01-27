@@ -137,3 +137,6 @@ GA_CODE = os.environ.get('GA_CODE')
 
 # Comma-separated integers to draw a 'wanted donations' line in monthly estimated donations charts
 DONATIONS_PROJECTION = os.environ.get('DONATIONS_PROJECTION', '10,10,10,10,10,10,10,10,10,10,10,10')
+
+# Expected donations for the current year
+DONATIONS_EXPECTED = os.environ.get('DONATIONS_EXPECTED', '100')

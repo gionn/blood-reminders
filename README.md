@@ -61,6 +61,7 @@ Default credentials:
 * ADMIN_EMAIL: the email of the first created superadmin user (default: admin@change.me)
 * DB_*: configures postgres container
 * DONATIONS_PROJECTION: in the charts page, used by the first chart to draw a line as a target donation for every mounth (comma separated integers)
+* DONATIONS_EXPECTED: in the charts page, used by the second chart for the target amount of yearly donations for the current year.
 
 ## Development
 
