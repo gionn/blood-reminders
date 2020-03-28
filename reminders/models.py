@@ -1,3 +1,4 @@
+from computedfields.models import ComputedFieldsModel, computed
 from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
@@ -51,12 +52,19 @@ class Donor(models.Model):
         verbose_name_plural = _('donors')
 
 
-class Donation(models.Model):
+class Donation(ComputedFieldsModel):
     donor = models.ForeignKey(Donor, on_delete=models.CASCADE, verbose_name=_('donor'))
     done_at = models.DateTimeField(_('done at'), default=timezone.now)
     created_at = models.DateTimeField(_('created at'), default=timezone.now, editable=False)
     donation_type = models.CharField(_('donation type'), max_length=1, blank=True, choices=donation_type)
     ordering = ['-done_at']
+
+    @computed(models.PositiveSmallIntegerField(default=0))
+    def exp(self):
+        amount = 1
+        if self.donation_type in [PLASMA_TYPE, MULTIC_TYPE] or self.donor.gender == 'F':
+            amount = 2
+        return amount
 
     def done_at_pretty(self):
         return self.done_at.strftime('%Y-%m-%d')

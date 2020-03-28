@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'reminders.apps.RemindersConfig',
     'charts.apps.ChartsConfig',
+    'computedfields',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
