@@ -62,6 +62,7 @@ Default credentials:
 * DB_*: configures postgres container
 * DONATIONS_PROJECTION: in the charts page, used by the first chart to draw a line as a target donation for every mounth (comma separated integers)
 * DONATIONS_EXPECTED: in the charts page, used by the second chart for the target amount of yearly donations for the current year.
+* APP_LOG_LEVEL: configure default logging level (defaults to INFO)
 
 ## Development
 

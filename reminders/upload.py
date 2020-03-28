@@ -53,7 +53,7 @@ def handle_uploaded_donors_file(file):
             )
             d.save()
             created += 1
-    logger.warn('Finished importing: {} creation, {} update'.format(created, updated))
+    logger.info('Finished importing: {} creation, {} update'.format(created, updated))
 
 
 def handle_uploaded_donations_file(file):
@@ -68,13 +68,13 @@ def handle_uploaded_donations_file(file):
         csv_born_date = convert_date(row['Data Nascita'])
         try:
             existing_donor = Donor.objects.get(name=row['Donatore'], born_date=csv_born_date)
-            existing_donation = Donation.objects.get(
+            Donation.objects.get(
                 donor=existing_donor,
                 done_at=csv_donation_date
             )
             continue
         except Donor.DoesNotExist:
-            logger.warn('''{} doesn't exists?'''.format(row['Donatore']))
+            logger.warning('''{} is not an existing donor'''.format(row['Donatore']))
             continue
         except Donation.DoesNotExist:
             existing_donor = Donor.objects.get(name=row['Donatore'], born_date=csv_born_date)
@@ -86,7 +86,7 @@ def handle_uploaded_donations_file(file):
             )
             d.save()
             created += 1
-    logger.warn('Finished importing donations: {} created'.format(created))
+    logger.info('Finished importing donations: {} created'.format(created))
 
 
 def get_donation_type(input):
@@ -98,7 +98,7 @@ def get_donation_type(input):
     elif input == 'Multicomponent':
         output = 'M'
     else:
-        logger.warn('Unrecognized value "{}"'.format(input))
+        logger.warning('Unrecognized value "{}"'.format(input))
     return output
 
 
@@ -113,7 +113,7 @@ def convert_blood_type(input):
     elif input == 'AB':
         output = 'AB'
     else:
-        logger.warn('Unrecognized value "{}"'.format(input))
+        logger.warning('Unrecognized value "{}"'.format(input))
     return output
 
 
@@ -132,7 +132,7 @@ def convert_rh(string):
         return '+'
     if string.lower() == 'negativo':
         return '-'
-    logger.warn('unhandled rh {}'.format(string))
+    logger.warning('Unrecognized rh {}'.format(string))
 
 
 def convert_phone(string):
