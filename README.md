@@ -66,7 +66,11 @@ Default credentials:
 ## Development
 
 ```bash
-# Dependencies
+# Python Dependencies
+apt-get install libpq-dev
+pip install -r requirements.txt
+
+# Project dependencies (postgres)
 docker-compose -f docker-compose.dev.yml up -d
 
 # Upgrade the database schema
