@@ -14,8 +14,7 @@ jobs:
 
       - run:
           name: Docker Hub login
-          command: |
-            docker login -u $DOCKER_USER -p $DOCKER_PASS
+          command: docker login -u $DOCKER_USER -p $DOCKER_PASS
 
       - run:
           name: Build the docker image
@@ -25,11 +24,12 @@ jobs:
           name: Run tests
           command: docker-compose -f docker-compose.test.yml up --abort-on-container-exit
 
-      - run:
-          name: Deploy image on Docker Hub if on master
+      - deploy:
+          name: Deploy image to Docker Hub
           command: |
             if [ "${CIRCLE_BRANCH}" == "master" ]; then
               docker push gionn/blood-reminders:latest
               docker tag gionn/blood-reminders:latest gionn/blood-reminders:$CIRCLE_BUILD_NUM
               docker push gionn/blood-reminders:$CIRCLE_BUILD_NUM
+              echo Push ok gionn/blood-reminders:$CIRCLE_BUILD_NUM
             fi
