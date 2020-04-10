@@ -1,15 +1,16 @@
+from datetime import datetime
+
+from dateutil.relativedelta import relativedelta
+from django.conf import settings
+from django.db.models import Count, Q, Sum
+from django.db.models.functions import TruncMonth, TruncYear
 from django.http import HttpResponse
-from django.views import View
 from django.template import loader
 from django.utils import timezone
 from django.utils.timezone import make_aware
-from django.utils.dateparse import parse_date
-from django.db.models import Count, Q
-from django.db.models.functions import TruncMonth, TruncYear
+from django.views import View
+
 from reminders.models import Donation, Donor, donation_type
-from datetime import datetime, timedelta
-from dateutil.relativedelta import relativedelta
-from django.conf import settings
 
 
 class ChartsView(View):
@@ -72,6 +73,8 @@ class ChartsView(View):
             'donations_this_year_remaining': donations_this_year_remaining,
             'donations_this_year_progress': donations_this_year_progress,
             'donations_data_this_year_projection': self.donations_this_year_projection(),
+            'donors_all_time': self.donors(Q()),
+            'donors_this_year': self.donors(self.this_year())
         }
         return HttpResponse(template.render(context, request))
 
@@ -117,3 +120,11 @@ class ChartsView(View):
             born_date__lt=(timezone.now() + relativedelta(years=-from_age)),
             born_date__gte=(timezone.now() + relativedelta(years=-to_age))
         ).count()
+
+    def donors(self, restriction):
+        return Donor.objects.filter(
+            restriction, last_donation_date__isnull=False
+        ).annotate(count=Sum('donation__exp')).order_by('-count')[:20]
+
+    def this_year(self):
+        return Q(donation__done_at__gt=make_aware(datetime(self.now.year, 1, 1)), donation__done_at__lte=make_aware(datetime(self.now.year, 12, 31)))

@@ -1,0 +1,97 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: \n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-03-28 17:41+0000\n"
+"PO-Revision-Date: 2020-03-28 18:44+0100\n"
+"Language: it\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"X-Generator: Poedit 2.3\n"
+
+#: charts/templates/charts/index.html:30 charts/templates/charts/index.html:37
+msgid "Stats for"
+msgstr ""
+
+#: charts/templates/charts/index.html:39
+msgid "Last update"
+msgstr ""
+
+#: charts/templates/charts/index.html:45
+#, python-format
+msgid "%(year)s donations and wanted"
+msgstr ""
+
+#: charts/templates/charts/index.html:49
+#, python-format
+msgid "Road to %(donations_this_year_expected)s donations"
+msgstr ""
+
+#: charts/templates/charts/index.html:55
+msgid "Last 12 months donations"
+msgstr ""
+
+#: charts/templates/charts/index.html:59
+msgid "Last 10 years donations"
+msgstr ""
+
+#: charts/templates/charts/index.html:65
+msgid "Last 12 months blood types"
+msgstr ""
+
+#: charts/templates/charts/index.html:69
+msgid "Last 12 months donations type"
+msgstr ""
+
+#: charts/templates/charts/index.html:75
+msgid "Last 12 months donors age"
+msgstr ""
+
+#: charts/templates/charts/index.html:83
+msgid "Top donors of all time"
+msgstr "Migliori donatori di sempre"
+
+#: charts/templates/charts/index.html:106
+msgid "Top donors of this year"
+msgstr "Migliori donatori di quest'anno"
+
+#: charts/templates/charts/index.html:139
+msgid "Female"
+msgstr ""
+
+#: charts/templates/charts/index.html:143
+msgid "Male"
+msgstr ""
+
+#: charts/templates/charts/index.html:147
+msgid "Total"
+msgstr ""
+
+#: charts/templates/charts/index.html:182
+msgid "Actual donations"
+msgstr ""
+
+#: charts/templates/charts/index.html:190
+msgid "Estimated donations"
+msgstr ""
+
+#: charts/templates/charts/index.html:223
+msgid "Done"
+msgstr ""
+
+#: charts/templates/charts/index.html:223
+msgid "Remaining"
+msgstr ""
+
+#: charts/templates/charts/index.html:241
+msgid "Donations"
+msgstr ""

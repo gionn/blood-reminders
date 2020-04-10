@@ -3,3 +3,4 @@ whitenoise==5.0.1
 gunicorn==20.0.4
 psycopg2==2.8.4
 python-dateutil==2.8.1
+django-computedfields==0.0.14
