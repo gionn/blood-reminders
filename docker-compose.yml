@@ -23,7 +23,7 @@ services:
       GA_CODE: ${GA_CODE}
   db:
     container_name: db
-    image: postgres:9.6.8-alpine
+    image: postgres:9.6.19
     restart: always
     volumes:
       - ${DB_PATH}:/var/lib/postgresql/data
