@@ -37,7 +37,6 @@ DB_HOST=db
 DB_PORT=5432
 DB_PATH=./pgdata
 ADMIN_PASSWORD=changeme
-ADMIN_PASSWORD=changeme
 ADMIN_USERNAME=admin
 ADMIN_EMAIL=me@gionn.net
 ```
