@@ -36,7 +36,7 @@
             <div class="col-sm">
                 <h1>{% trans "Stats for" %} {{ site_name }}</h1>
                 <p>
-                    {% trans "Last update" %}: {{ last_update|date:'Y-m-d' }}
+                    {% trans "Updated" %}: {{ last_update|date:'Y-m-d' }}
                 </p>
             </div>
         </div>
@@ -57,7 +57,7 @@
         {% if current_year %}
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>{% trans "Last 12 months donations" %}</h3>
+                <h3>{% trans "Current year donations" %}</h3>
                 <canvas id="donations"></canvas>
             </div>
             <div class="col-sm">
@@ -68,17 +68,17 @@
         {% endif %}
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>{% trans "Last 12 months blood types" %}</h3>
+                <h3>{% trans "Current year blood types" %}</h3>
                 <canvas id="blood_type_last_year"></canvas>
             </div>
             <div class="col-sm">
-                <h3>{% trans "Last 12 months donations type" %}</h3>
+                <h3>{% trans "Current year donations type" %}</h3>
                 <canvas id="donations_last_year_by_type"></canvas>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>{% trans "Last 12 months donors age" %}</h3>
+                <h3>{% trans "Current year donors age" %}</h3>
                 <canvas id="age_last_year"></canvas>
             </div>
         </div>
