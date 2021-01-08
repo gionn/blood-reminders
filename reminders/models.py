@@ -23,7 +23,7 @@ class Donor(models.Model):
         ('F', _('Female')),
         ('', _('undefined')),
     ))
-    last_donation_type = models.CharField(_('last donation'), max_length=1, blank=True, choices=donation_type)
+    last_donation_type = models.CharField(_('last donation'), max_length=1, blank=True, null=True, choices=donation_type)
     blood_type = models.CharField(_('blood type'), max_length=2, blank=True, null=True, choices=(
         ('O', 'O'),
         ('AB', 'AB'),

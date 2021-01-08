@@ -19,8 +19,13 @@ def handle_uploaded_donors_file(file):
     created = 0
     updated = 0
     for row in reader:
-        csv_last_donation_type = get_donation_type(row['Tipo Ultima Donazione'])
-        csv_last_donation_date = convert_date(row['Data Ultima Donazione'])
+        discontinued_donor = 'Data cessazione' in row
+        if discontinued_donor:
+            csv_suspension_date = convert_date(row['Data cessazione'])
+        else:
+            csv_last_donation_type = get_donation_type(row['Tipo Ultima Donazione'])
+            csv_last_donation_date = convert_date(row['Data Ultima Donazione'])
+        
         csv_born_date = convert_date(row['Data Nascita'])
         csv_blood_type = convert_blood_type(row['Gruppo sanguigno'])
         csv_blood_rh = convert_rh(row['Rh'])
@@ -28,8 +33,13 @@ def handle_uploaded_donors_file(file):
 
         try:
             existing_donor = Donor.objects.get(tax_code=row['Codice Fiscale'])
-            existing_donor.last_donation_type = csv_last_donation_type
-            existing_donor.last_donation_date = csv_last_donation_date
+            if discontinued_donor:
+                existing_donor.suspension_date = csv_suspension_date
+                existing_donor.suspension_reason = 'discontinued'
+            else:
+                existing_donor.last_donation_type = csv_last_donation_type
+                existing_donor.last_donation_date = csv_last_donation_date
+            
             existing_donor.blood_type = csv_blood_type
             existing_donor.blood_rh = csv_blood_rh
             if not existing_donor.phone or not existing_donor.phone.startswith('+'):
@@ -39,6 +49,7 @@ def handle_uploaded_donors_file(file):
             existing_donor.save()
             updated += 1
         except Donor.DoesNotExist:
+            if discontinued_donor: continue
             d = Donor(
                 name=row['Soggetto'],
                 tax_code=row['Codice Fiscale'],
@@ -74,7 +85,7 @@ def handle_uploaded_donations_file(file):
             )
             continue
         except Donor.DoesNotExist:
-            logger.warning('''{} is not an existing donor'''.format(row['Donatore']))
+            logger.warning('''{} is not an existing donor, skipping donation of {}'''.format(row['Donatore'], csv_donation_date))
             continue
         except Donation.DoesNotExist:
             existing_donor = Donor.objects.get(name=row['Donatore'], born_date=csv_born_date)
@@ -89,36 +100,36 @@ def handle_uploaded_donations_file(file):
     logger.info('Finished importing donations: {} created'.format(created))
 
 
-def get_donation_type(input):
-    output = ''
-    if input == 'Sangue intero':
-        output = 'B'
-    elif input == 'Plasmaferesi':
-        output = 'P'
-    elif input == 'Multicomponent':
-        output = 'M'
+def get_donation_type(string):
+    if not string.strip():
+        return None
+    if string == 'Sangue intero':
+        return 'B'
+    elif string == 'Plasmaferesi':
+        return 'P'
+    elif string == 'Multicomponent':
+        return 'M'
     else:
-        logger.warning('Unrecognized value "{}"'.format(input))
-    return output
+        logger.warning('Unrecognized donation type for value <{}>'.format(string))
 
 
-def convert_blood_type(input):
-    output = ''
-    if input == '0' or input == 'O':
-        output = 'O'
-    elif input == 'A':
-        output = 'A'
-    elif input == 'B':
-        output = 'B'
-    elif input == 'AB':
-        output = 'AB'
+def convert_blood_type(string):
+    if not string.strip() or string == 'NS':
+        return None
+    elif string == '0' or string == 'O':
+        return 'O'
+    elif string == 'A':
+        return 'A'
+    elif string == 'B':
+        return 'B'
+    elif string == 'AB':
+        return 'AB'
     else:
-        logger.warning('Unrecognized value "{}"'.format(input))
-    return output
+        logger.warning('Unrecognized blood type for value <{}>'.format(string))
 
 
 def convert_date(date_string):
-    if not date_string:
+    if not date_string.strip():
         return None
     date = datetime.strptime(date_string, '%d/%m/%Y')
     current_tz = timezone.get_current_timezone()
@@ -126,13 +137,13 @@ def convert_date(date_string):
 
 
 def convert_rh(string):
-    if not string:
-        return ''
+    if not string.strip() or string == 'NS':
+        return None
     if string.lower() == 'positivo':
         return '+'
     if string.lower() == 'negativo':
         return '-'
-    logger.warning('Unrecognized rh {}'.format(string))
+    logger.warning('Unrecognized rh for value <{}>'.format(string))
 
 
 def convert_phone(string):
