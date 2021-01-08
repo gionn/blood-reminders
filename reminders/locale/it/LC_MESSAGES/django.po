@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-08 10:47+0100\n"
-"PO-Revision-Date: 2021-01-08 10:44+0100\n"
+"PO-Revision-Date: 2021-01-08 10:56+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -189,57 +189,3 @@ msgstr "promemoria"
 #: reminders/models.py:83
 msgid "reminders"
 msgstr "promemoria"
-
-#: reminders/templates/admin/reminders/donation/change_list.html:12
-#: reminders/templates/admin/reminders/donor/change_list.html:12
-#, python-format
-msgid "Add %(name)s"
-msgstr "Aggiungi %(name)s"
-
-#~ msgid "Stats for"
-#~ msgstr "Statistiche per"
-
-#~ msgid "Last update"
-#~ msgstr "Ultimo aggiornamento"
-
-#~ msgid "%(year)s donations and wanted"
-#~ msgstr "Donazioni %(year)s e obbiettivi"
-
-#~ msgid "Road to %(donations_this_year_expected)s donations"
-#~ msgstr "Obbiettivo %(donations_this_year_expected)s donazioni"
-
-#~ msgid "Last 12 months donations"
-#~ msgstr "Donazioni ultimi 12 mesi"
-
-#~ msgid "Last 10 years donations"
-#~ msgstr "Donazioni ultimi 10 anni"
-
-#~ msgid "Last 12 months blood types"
-#~ msgstr "Gruppi sanguigni degli ultimi 12 mesi"
-
-#~ msgid "Last 12 months donations type"
-#~ msgstr "Tipologia donazioni degli ultimi 12 mesi"
-
-#~ msgid "Last 12 months donors age"
-#~ msgstr "Età donatori degli ultimi 12 mesi"
-
-#~ msgid "Total"
-#~ msgstr "Totale"
-
-#~ msgid "Actual donations"
-#~ msgstr "Donazioni effettive"
-
-#~ msgid "Estimated donations"
-#~ msgstr "Donazioni stimate"
-
-#~ msgid "Done"
-#~ msgstr "Effettuate"
-
-#~ msgid "Remaining"
-#~ msgstr "Rimanenti"
-
-#~ msgid "Donations"
-#~ msgstr "Donazioni"
-
-#~ msgid "Projections"
-#~ msgstr "Stime"

@@ -8,7 +8,7 @@ msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2021-01-08 10:47+0100\n"
-"PO-Revision-Date: 2021-01-08 10:48+0100\n"
+"PO-Revision-Date: 2021-01-08 10:57+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -91,18 +91,3 @@ msgstr "Rimanenti"
 #: charts/templates/charts/index.html:209
 msgid "Donations"
 msgstr "Donazioni"
-
-#~ msgid "Last update"
-#~ msgstr "Ultimo aggiornamento"
-
-#~ msgid "Last 12 months donations"
-#~ msgstr "Donazioni ultimi 12 mesi"
-
-#~ msgid "Last 12 months blood types"
-#~ msgstr "Gruppi sanguigni degli ultimi 12 mesi"
-
-#~ msgid "Last 12 months donations type"
-#~ msgstr "Tipologia donazioni"
-
-#~ msgid "Last 12 months donors age"
-#~ msgstr "Età donatori nell'anno"
