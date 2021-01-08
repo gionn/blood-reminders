@@ -54,18 +54,16 @@
                 <canvas id="donations_this_year_progress"></canvas>
             </div>
         </div>
-        {% if current_year %}
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>{% trans "Current year donations" %}</h3>
+                <h3>{% trans "Current year donations by gender" %}</h3>
                 <canvas id="donations"></canvas>
             </div>
             <div class="col-sm">
-                <h3>{% trans "Last 10 years donations" %}</h3>
-                <canvas id="donations_yearly"></canvas>
+                <h3>{% trans "Current year donors age" %}</h3>
+                <canvas id="age_last_year"></canvas>
             </div>
         </div>
-        {% endif %}
         <div class="row mt-3">
             <div class="col-sm">
                 <h3>{% trans "Current year blood types" %}</h3>
@@ -76,12 +74,14 @@
                 <canvas id="donations_last_year_by_type"></canvas>
             </div>
         </div>
+        {% if current_year %}
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>{% trans "Current year donors age" %}</h3>
-                <canvas id="age_last_year"></canvas>
+                <h3>{% trans "Last 10 years donations" %}</h3>
+                <canvas id="donations_yearly"></canvas>
             </div>
         </div>
+        {% endif %}
     </div>
     
     <script>
