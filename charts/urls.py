@@ -5,4 +5,5 @@ from charts.views import ChartsView
 
 urlpatterns = [
     path('', ChartsView.as_view()),
+    path('<int:year>', ChartsView.as_view()),
 ]

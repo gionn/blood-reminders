@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-01-08 10:47+0100\n"
-"PO-Revision-Date: 2021-01-08 10:57+0100\n"
+"POT-Creation-Date: 2021-01-08 11:40+0100\n"
+"PO-Revision-Date: 2021-01-08 11:42+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -23,71 +23,78 @@ msgid "Stats for"
 msgstr "Statistiche per"
 
 #: charts/templates/charts/index.html:39
+msgid "Stats for the year"
+msgstr "Statistiche per l'anno"
+
+#: charts/templates/charts/index.html:46
 msgid "Updated"
 msgstr "Aggiornato al"
 
-#: charts/templates/charts/index.html:45
+#: charts/templates/charts/index.html:52
 #, python-format
 msgid "%(year)s donations"
 msgstr "Donazioni %(year)s"
 
-#: charts/templates/charts/index.html:50
+#: charts/templates/charts/index.html:57
 #, python-format
 msgid "Road to %(donations_this_year_expected)s donations"
 msgstr "Obiettivo verso %(donations_this_year_expected)s donazioni"
 
-#: charts/templates/charts/index.html:52
+#: charts/templates/charts/index.html:59
 msgid "Total donations"
 msgstr "Totale donazioni"
 
-#: charts/templates/charts/index.html:60
-msgid "Current year donations"
-msgstr "Donazioni nell'anno"
+#: charts/templates/charts/index.html:66
+msgid "Current year donations by gender"
+msgstr "Sesso donatori nell'anno"
 
-#: charts/templates/charts/index.html:64
-msgid "Last 10 years donations"
-msgstr "Donazioni ultimi 10 anni"
-
-#: charts/templates/charts/index.html:71
-msgid "Current year blood types"
-msgstr "Gruppi sanguigni nell'anno"
-
-#: charts/templates/charts/index.html:75
-msgid "Current year donations type"
-msgstr "Tipologia donazioni nell'anno"
-
-#: charts/templates/charts/index.html:81
+#: charts/templates/charts/index.html:70
 msgid "Current year donors age"
 msgstr "Età donatori nell'anno"
 
-#: charts/templates/charts/index.html:94
+#: charts/templates/charts/index.html:76
+msgid "Current year blood types"
+msgstr "Gruppi sanguigni nell'anno"
+
+#: charts/templates/charts/index.html:80
+msgid "Current year donations type"
+msgstr "Tipologia donazioni nell'anno"
+
+#: charts/templates/charts/index.html:87
+msgid "Last 10 years donations"
+msgstr "Donazioni ultimi 10 anni"
+
+#: charts/templates/charts/index.html:101
 msgid "Female"
 msgstr "Femmina"
 
-#: charts/templates/charts/index.html:98
+#: charts/templates/charts/index.html:105
 msgid "Male"
 msgstr "Maschio"
 
-#: charts/templates/charts/index.html:102
+#: charts/templates/charts/index.html:109
 msgid "Total"
 msgstr "Totali"
 
-#: charts/templates/charts/index.html:137
+#: charts/templates/charts/index.html:144
 msgid "Actual donations"
 msgstr "Donazioni effettuate"
 
-#: charts/templates/charts/index.html:146
+#: charts/templates/charts/index.html:153
 msgid "Estimated donations"
 msgstr "Donazioni stimate"
 
-#: charts/templates/charts/index.html:186
+#: charts/templates/charts/index.html:193
 msgid "Done"
 msgstr "Effettuate"
 
-#: charts/templates/charts/index.html:188
+#: charts/templates/charts/index.html:195
 msgid "Remaining"
 msgstr "Rimanenti"
 
-#: charts/templates/charts/index.html:209
+#: charts/templates/charts/index.html:216
 msgid "Donations"
 msgstr "Donazioni"
+
+#~ msgid "Current year donations"
+#~ msgstr "Donazioni nell'anno"

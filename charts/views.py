@@ -14,11 +14,15 @@ from django.conf import settings
 
 class ChartsView(View):
 
-    def get(self, request):
-        try:
-            last_update = make_aware(datetime(int(request.GET['year']), 12, 31))
+    def get(self, request, year = None):
+        first_donation_date = Donation.objects.order_by('done_at')[0].done_at
+        last_donation_date = Donation.objects.order_by('-done_at')[0].done_at
+        years_interval = reversed(range(first_donation_date.year, last_donation_date.year + 1))
+
+        if year is not None and year != last_donation_date.year:
+            last_update = make_aware(datetime(year, 12, 31))
             current_year = False
-        except KeyError:
+        else:
             last_update = Donation.objects.order_by('-done_at')[0].done_at
             current_year = True
 
@@ -76,6 +80,7 @@ class ChartsView(View):
             'donations_this_year_progress': donations_this_year_progress,
             'donations_data_this_year_projection': self.donations_this_year_projection(last_update),
             'current_year': current_year,
+            'years_interval': years_interval,
         }
         return HttpResponse(template.render(context, request))
 

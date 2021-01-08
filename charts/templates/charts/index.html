@@ -36,6 +36,13 @@
             <div class="col-sm">
                 <h1>{% trans "Stats for" %} {{ site_name }}</h1>
                 <p>
+                    <label for="years">{% trans "Stats for the year" %}</label>
+                    <select name="years" id="years" onchange="location=this.value">
+                    {% for year in years_interval %}
+                        <option value="{{ year }}" {% if last_update.year == year %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                    </select>
+                    <br/>
                     {% trans "Updated" %}: {{ last_update|date:'Y-m-d' }}
                 </p>
             </div>
