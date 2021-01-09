@@ -139,7 +139,7 @@ class DonorAdmin(admin.ModelAdmin):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
-                handle_uploaded_donors_file(request.FILES['file'])
+                handle_uploaded_donors_file(request.FILES['file'], request)
                 return HttpResponseRedirect(reverse('admin:reminders_donor_changelist'))
         else:
             form = UploadFileForm()
@@ -178,7 +178,7 @@ class DonationAdmin(admin.ModelAdmin):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
-                handle_uploaded_donations_file(request.FILES['file'])
+                handle_uploaded_donations_file(request.FILES['file'], request)
                 return HttpResponseRedirect(reverse('admin:reminders_donation_changelist'))
         else:
             form = UploadFileForm()

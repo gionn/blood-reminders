@@ -11,7 +11,7 @@ This is my first django / python application, please be gently.
 ## Current features
 
 * Admin panel with user/password authentication [screenshot](screenshots/admin-home.jpeg)
-* Support CSV import of donors and donations from existing FRATRES SIF software
+* Support import from Fratres SIF software CSV of donors (Informazioni Associati -> Soci and Cessati) and donations (Informazioni Donatori -> Donazioni)
 * Donor management (personal data, contact information, blood type) [screenshot 1](screenshots/donors-list.jpeg) [screenshot 2](screenshots/donors-edit-1.jpeg) [screenshot 3](screenshots/donors-edit-2.jpeg)
 * Donations management
 * Reminders management (not really sending any reminder) [screenshot](screenshots/create-reminder.jpeg)
