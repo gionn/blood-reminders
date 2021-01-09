@@ -45,20 +45,23 @@ def handle_uploaded_donors_file(file, request):
             existing_donor.save()
             updated += 1
         except Donor.DoesNotExist:
-            if discontinued_donor: continue
-            d = Donor(
+            new_donor = Donor(
                 name=row['Soggetto'],
                 tax_code=row['Codice Fiscale'],
                 born_date=csv_born_date,
                 gender=row['Sesso'],
                 blood_type=csv_blood_type,
                 blood_rh=csv_blood_rh,
-                last_donation_type=csv_last_donation_type,
-                last_donation_date=csv_last_donation_date,
                 phone=phone,
                 email=row['Recapiti mail'],
             )
-            d.save()
+            if discontinued_donor:
+                new_donor.suspension_date = csv_suspension_date
+                new_donor.suspension_reason = 'discontinued'
+            else:
+                new_donor.last_donation_type = csv_last_donation_type
+                new_donor.last_donation_date = csv_last_donation_date
+            new_donor.save()
             created += 1
     messages.info(request, 'Import successful: {} created, {} updated'.format(created, updated))
 
