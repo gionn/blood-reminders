@@ -36,48 +36,59 @@
             <div class="col-sm">
                 <h1>{% trans "Stats for" %} {{ site_name }}</h1>
                 <p>
-                    {% trans "Last update" %}: {{ last_update|date:'Y-m-d' }}
+                    <label for="years">{% trans "Stats for the year" %}</label>
+                    <select name="years" id="years" onchange="location=this.value">
+                    {% for year in years_interval %}
+                        <option value="{{ year }}" {% if last_update.year == year %}selected{% endif %}>{{ year }}</option>
+                    {% endfor %}
+                    </select>
+                    <br/>
+                    {% trans "Updated" %}: {{ last_update|date:'Y-m-d' }}
                 </p>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>{% blocktrans %}{{ year }} donations and wanted{% endblocktrans %}</h3>
+                <h3>{% blocktrans %}{{ year }} donations{% endblocktrans %}</h3>
                 <canvas id="donations_this_year"></canvas>
             </div>
             <div class="col-sm">
+                {% if current_year %}
                 <h3>{% blocktrans %}Road to {{donations_this_year_expected}} donations{% endblocktrans %}</h3>
+                {% else %}
+                <h3>{% blocktrans %}Total donations{% endblocktrans %}</h3>
+                {% endif %}
                 <canvas id="donations_this_year_progress"></canvas>
             </div>
         </div>
         <div class="row mt-3">
             <div class="col-sm">
-                <h3>{% trans "Last 12 months donations" %}</h3>
+                <h3>{% trans "Current year donations by gender" %}</h3>
                 <canvas id="donations"></canvas>
             </div>
+            <div class="col-sm">
+                <h3>{% trans "Current year donors age" %}</h3>
+                <canvas id="age_last_year"></canvas>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="col-sm">
+                <h3>{% trans "Current year blood types" %}</h3>
+                <canvas id="blood_type_last_year"></canvas>
+            </div>
+            <div class="col-sm">
+                <h3>{% trans "Current year donations type" %}</h3>
+                <canvas id="donations_last_year_by_type"></canvas>
+            </div>
+        </div>
+        {% if current_year %}
+        <div class="row mt-3">
             <div class="col-sm">
                 <h3>{% trans "Last 10 years donations" %}</h3>
                 <canvas id="donations_yearly"></canvas>
             </div>
         </div>
-        <div class="row mt-3">
-            <div class="col-sm">
-                <h3>{% trans "Last 12 months blood types" %}</h3>
-                <canvas id="blood_type_last_year"></canvas>
-            </div>
-            <div class="col-sm">
-                <h3>{% trans "Last 12 months donations type" %}</h3>
-                <canvas id="donations_last_year_by_type"></canvas>
-            </div>
-        </div>
-        <div class="row mt-3">
-            <div class="col-sm">
-                <h3>{% trans "Last 12 months donors age" %}</h3>
-                <canvas id="age_last_year"></canvas>
-            </div>
-            <div class="col-sm">
-            </div>
-        </div>
+        {% endif %}
     </div>
     
     <script>
@@ -137,12 +148,14 @@
                 borderColor: "#aa0705",
                 backgroundColor: "#D93138",
             },
+            {% if current_year %}
             {
                 label: '{% trans "Estimated donations" %}',
                 data: [{% for t, v in donations_data_this_year_projection %}{x: '{{ t|date:'Y-m-d' }}', y:{{ v }}},{% endfor %}],
                 borderColor: "#3e95cd",
                 fill: false,
             },
+            {% endif %}
             ],
         },
         options: {
@@ -169,9 +182,19 @@
         type: 'doughnut',
         data: {
             datasets: [{
-                data: [{{ donations_this_year_count }}, {{ donations_this_year_remaining }}]
+                data: [
+                    {{ donations_this_year_count }},
+                    {% if current_year %}
+                    {{ donations_this_year_remaining }},
+                    {% endif %}
+                ]
             }],
-            labels: ['{% trans "Done" %}','{% trans "Remaining" %}']
+            labels: [
+                '{% trans "Done" %}',
+                {% if current_year %}
+                '{% trans "Remaining" %}',
+                {% endif %}
+            ]
         },
         options: {
             plugins: {
@@ -183,6 +206,7 @@
     });
     </script>
 
+    {% if current_year %}
     <script>
     var ctx = document.getElementById("donations_yearly").getContext('2d');
     var myChart = new Chart(ctx, {
@@ -215,6 +239,7 @@
             }
     });
     </script>
+    {% endif %}
 
 
     <script>

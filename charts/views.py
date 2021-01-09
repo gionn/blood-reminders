@@ -14,8 +14,17 @@ from django.conf import settings
 
 class ChartsView(View):
 
-    def get(self, request):
-        last_update = Donation.objects.order_by('-done_at')[0].done_at
+    def get(self, request, year = None):
+        first_donation_date = Donation.objects.order_by('done_at')[0].done_at
+        last_donation_date = Donation.objects.order_by('-done_at')[0].done_at
+        years_interval = reversed(range(first_donation_date.year, last_donation_date.year + 1))
+
+        if year is not None and year != last_donation_date.year:
+            last_update = make_aware(datetime(year, 12, 31))
+            current_year = False
+        else:
+            last_update = Donation.objects.order_by('-done_at')[0].done_at
+            current_year = True
 
         donations_data = self.donations_last_year(Q(), last_update)
 
@@ -34,13 +43,13 @@ class ChartsView(View):
             last_donation_date__gt=(last_update + relativedelta(months=-12)).replace(day=1, hour=0, minute=0)
         ).values('blood_type', 'blood_rh').annotate(count=Count('id')).values_list('blood_type', 'blood_rh', 'count').order_by('-count')
 
-        age_young_last_year = self.donor_age_count(0, 28)
+        age_young_last_year = self.donor_age_count(0, 28, last_update)
 
-        age_junior_last_year = self.donor_age_count(28, 39)
+        age_junior_last_year = self.donor_age_count(28, 39, last_update)
 
-        age_senior_last_year = self.donor_age_count(39, 50)
+        age_senior_last_year = self.donor_age_count(39, 50, last_update)
 
-        age_elder_last_year = self.donor_age_count(50, 99)
+        age_elder_last_year = self.donor_age_count(50, 99, last_update)
 
         donations_this_year_count = self.donations_this_year_count(last_update)
         donations_this_year_expected = int(settings.DONATIONS_EXPECTED)
@@ -70,6 +79,8 @@ class ChartsView(View):
             'donations_this_year_remaining': donations_this_year_remaining,
             'donations_this_year_progress': donations_this_year_progress,
             'donations_data_this_year_projection': self.donations_this_year_projection(last_update),
+            'current_year': current_year,
+            'years_interval': years_interval,
         }
         return HttpResponse(template.render(context, request))
 
@@ -105,13 +116,13 @@ class ChartsView(View):
 
     def donations_last_year_by_type(self, date):
         return Donation.objects.filter(
-            done_at__gte=(timezone.now() + relativedelta(months=-12)).replace(day=1, hour=0, minute=0),
+            done_at__gte=(date + relativedelta(months=-12)).replace(day=1, hour=0, minute=0),
             done_at__lt=make_aware(datetime(date.year, date.month, 1)),
         ).values('donation_type').annotate(count=Count('id')).order_by('-count')
 
-    def donor_age_count(self, from_age, to_age):
+    def donor_age_count(self, from_age, to_age, date):
         return Donor.objects.filter(
-            last_donation_date__gt=(timezone.now() + relativedelta(months=-12)).replace(day=1, hour=0, minute=0),
-            born_date__lt=(timezone.now() + relativedelta(years=-from_age)),
-            born_date__gte=(timezone.now() + relativedelta(years=-to_age))
+            last_donation_date__gt=(date+ relativedelta(months=-12)).replace(day=1, hour=0, minute=0),
+            born_date__lt=(date + relativedelta(years=-from_age)),
+            born_date__gte=(date + relativedelta(years=-to_age))
         ).count()

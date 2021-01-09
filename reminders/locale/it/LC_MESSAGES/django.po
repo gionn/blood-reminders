@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: \n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-01-12 11:43+0100\n"
-"PO-Revision-Date: 2019-01-12 21:58+0100\n"
+"POT-Creation-Date: 2021-01-08 11:40+0100\n"
+"PO-Revision-Date: 2021-01-08 11:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: it\n"
@@ -16,73 +16,73 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 2.2\n"
+"X-Generator: Poedit 2.4.2\n"
 
-#: reminders/admin.py:21 reminders/models.py:27
+#: reminders/admin.py:22 reminders/models.py:27
 msgid "blood type"
 msgstr "gruppo sanguigno"
 
-#: reminders/admin.py:26
+#: reminders/admin.py:27
 msgid "O"
 msgstr "O"
 
-#: reminders/admin.py:27
+#: reminders/admin.py:28
 msgid "A"
 msgstr "A"
 
-#: reminders/admin.py:28
+#: reminders/admin.py:29
 msgid "B"
 msgstr "B"
 
-#: reminders/admin.py:29
+#: reminders/admin.py:30
 msgid "AB"
 msgstr "AB"
 
-#: reminders/admin.py:38 reminders/models.py:33
+#: reminders/admin.py:40 reminders/models.py:33
 msgid "blood rh"
 msgstr "fattore RH"
 
-#: reminders/admin.py:43 reminders/models.py:34
+#: reminders/admin.py:45 reminders/models.py:34
 msgid "Positive"
 msgstr "Positivo"
 
-#: reminders/admin.py:44 reminders/models.py:35
+#: reminders/admin.py:46 reminders/models.py:35
 msgid "Negative"
 msgstr "Negativo"
 
-#: reminders/admin.py:53
+#: reminders/admin.py:56
 msgid "reminder needed"
 msgstr "promemoria necessario"
 
-#: reminders/admin.py:58
+#: reminders/admin.py:61
 msgid "Reminder to be sent"
 msgstr "Promemoria da inviare"
 
-#: reminders/admin.py:59
+#: reminders/admin.py:62
 msgid "Reminder not needed"
 msgstr "Promemoria non necessario"
 
-#: reminders/admin.py:71 reminders/models.py:26
+#: reminders/admin.py:74 reminders/models.py:26
 msgid "last donation"
 msgstr "ultima donazione"
 
-#: reminders/admin.py:76
+#: reminders/admin.py:79
 msgid "In the last year"
 msgstr "Nell'ultimo anno"
 
-#: reminders/admin.py:77
+#: reminders/admin.py:80
 msgid "More than 1 year ago"
 msgstr "Più di un anno fa"
 
-#: reminders/admin.py:78
+#: reminders/admin.py:81
 msgid "More than 2 years ago"
 msgstr "Più di 2 anni fa"
 
-#: reminders/admin.py:79
+#: reminders/admin.py:82
 msgid "More than 3 years"
 msgstr "Più di 3 anni fa"
 
-#: reminders/admin.py:203
+#: reminders/admin.py:206
 msgid "Blood donors management"
 msgstr "Gestionale donatori di sangue"
 
@@ -118,11 +118,11 @@ msgstr "data di nascita"
 msgid "gender"
 msgstr "sesso"
 
-#: reminders/models.py:22 reminders/templates/charts/index.html:82
+#: reminders/models.py:22
 msgid "Male"
 msgstr "Maschio"
 
-#: reminders/models.py:23 reminders/templates/charts/index.html:78
+#: reminders/models.py:23
 msgid "Female"
 msgstr "Femmina"
 
@@ -195,69 +195,3 @@ msgstr "promemoria"
 #, python-format
 msgid "Add %(name)s"
 msgstr "Aggiungi %(name)s"
-
-#: reminders/templates/charts/index.html:18
-#: reminders/templates/charts/index.html:25
-msgid "Stats for"
-msgstr "Statistiche per"
-
-#: reminders/templates/charts/index.html:27
-msgid "Last update"
-msgstr "Ultimo aggiornamento"
-
-#: reminders/templates/charts/index.html:33
-#, python-format
-msgid "%(year)s donations and wanted"
-msgstr "Donazioni %(year)s e obbiettivi"
-
-#: reminders/templates/charts/index.html:37
-#, python-format
-msgid "Road to %(donations_this_year_expected)s donations"
-msgstr "Obbiettivo %(donations_this_year_expected)s donazioni"
-
-#: reminders/templates/charts/index.html:43
-msgid "Last 12 months donations"
-msgstr "Donazioni ultimi 12 mesi"
-
-#: reminders/templates/charts/index.html:47
-msgid "Last 10 years donations"
-msgstr "Donazioni ultimi 10 anni"
-
-#: reminders/templates/charts/index.html:53
-msgid "Last 12 months blood types"
-msgstr "Gruppi sanguigni degli ultimi 12 mesi"
-
-#: reminders/templates/charts/index.html:57
-msgid "Last 12 months donations type"
-msgstr "Tipologia donazioni degli ultimi 12 mesi"
-
-#: reminders/templates/charts/index.html:63
-msgid "Last 12 months donors age"
-msgstr "Età donatori degli ultimi 12 mesi"
-
-#: reminders/templates/charts/index.html:86
-msgid "Total"
-msgstr "Totale"
-
-#: reminders/templates/charts/index.html:121
-msgid "Actual donations"
-msgstr "Donazioni effettive"
-
-#: reminders/templates/charts/index.html:129
-msgid "Estimated donations"
-msgstr "Donazioni stimate"
-
-#: reminders/templates/charts/index.html:162
-msgid "Done"
-msgstr "Effettuate"
-
-#: reminders/templates/charts/index.html:162
-msgid "Remaining"
-msgstr "Rimanenti"
-
-#: reminders/templates/charts/index.html:180
-msgid "Donations"
-msgstr "Donazioni"
-
-#~ msgid "Projections"
-#~ msgstr "Stime"
