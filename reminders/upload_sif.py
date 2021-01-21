@@ -5,15 +5,13 @@ from io import StringIO
 
 from django.utils import timezone
 
-from reminders.models import Donation, Donor
-
-from .models import Donor
+from .models import Donation, Donor
 
 # Get an instance of a logger
 logger = logging.getLogger(__name__)
 
 
-def handle_uploaded_donors_file(file):
+def parse_donors_file(file):
     csv_file = StringIO(file.read().decode('utf-8-sig'))
     reader = csv.DictReader(csv_file, delimiter=';')
     created = 0
@@ -56,7 +54,7 @@ def handle_uploaded_donors_file(file):
     logger.info('Finished importing: {} creation, {} update'.format(created, updated))
 
 
-def handle_uploaded_donations_file(file):
+def parse_donations_file(file):
     last_tracked_donation = get_last_donation_date()
     csv_file = StringIO(file.read().decode('utf-8-sig'))
     reader = csv.DictReader(csv_file, delimiter=';')

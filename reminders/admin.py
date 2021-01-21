@@ -13,7 +13,7 @@ from reminders.query import DonorQuerySet
 
 from .forms import UploadFileForm
 from .models import Donation, Donor, Reminder
-from .upload import handle_uploaded_donations_file, handle_uploaded_donors_file
+from .upload_sif import parse_donations_file, parse_donors_file
 
 logger = logging.getLogger(__name__)
 
@@ -139,7 +139,7 @@ class DonorAdmin(admin.ModelAdmin):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
-                handle_uploaded_donors_file(request.FILES['file'])
+                parse_donors_file(request.FILES['file'])
                 return HttpResponseRedirect(reverse('admin:reminders_donor_changelist'))
         else:
             form = UploadFileForm()
@@ -178,7 +178,7 @@ class DonationAdmin(admin.ModelAdmin):
         if request.method == 'POST':
             form = UploadFileForm(request.POST, request.FILES)
             if form.is_valid():
-                handle_uploaded_donations_file(request.FILES['file'])
+                parse_donations_file(request.FILES['file'])
                 return HttpResponseRedirect(reverse('admin:reminders_donation_changelist'))
         else:
             form = UploadFileForm()
