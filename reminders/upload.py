@@ -21,7 +21,7 @@ def handle_uploaded_donors_file(file, request):
         else:
             csv_last_donation_type = convert_donation_type(row['Tipo Ultima Donazione'], request)
             csv_last_donation_date = convert_date(row['Data Ultima Donazione'])
-        
+
         csv_born_date = convert_date(row['Data Nascita'])
         csv_blood_type = convert_blood_type(row['Gruppo sanguigno'], request)
         csv_blood_rh = convert_rh(row['Rh'], request)
@@ -35,7 +35,7 @@ def handle_uploaded_donors_file(file, request):
             else:
                 existing_donor.last_donation_type = csv_last_donation_type
                 existing_donor.last_donation_date = csv_last_donation_date
-            
+
             existing_donor.blood_type = csv_blood_type
             existing_donor.blood_rh = csv_blood_rh
             if not existing_donor.phone or not existing_donor.phone.startswith('+'):
