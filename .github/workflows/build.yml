@@ -53,6 +53,7 @@ jobs:
 
       - name: Docker build
         uses: docker/build-push-action@v6
+        id: build
         env:
           DOCKER_BUILD_SUMMARY: ${{ github.event_name != 'push' }}
         with:
@@ -71,6 +72,7 @@ jobs:
           DB_USER: test
           DB_PASS: test
           DB_PATH: /dev/shm/pgdata
+          IMAGE_TAG: ${{ steps.build.outputs.digest }}
         run: |
           docker compose -f docker-compose.gha.yml up --abort-on-container-exit
 
