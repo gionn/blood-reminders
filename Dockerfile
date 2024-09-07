@@ -1,4 +1,4 @@
-FROM python:3.9-alpine
+FROM python:3.12-alpine
 EXPOSE 8000
 
 ENV GUNICORN_CMD_ARGS --bind=0.0.0.0 --workers=2
