@@ -20,35 +20,9 @@ jobs:
     steps:
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@9d00215f539f669b41c7fabf7b88ccc8f316926c
 
-  build:
-    runs-on: ubuntu-latest
-    needs: pre-commit
-
-    steps:
-      - uses: actions/checkout@v4
-
-      - name: Setup Python
-        uses: actions/setup-python@v5
-        with:
-          python-version-file: ".python-version"
-          cache: "pip"
-
-      - name: Install dependencies
-        run: |
-          python -m pip install --upgrade pip
-          pip install -r requirements.txt
-
-      - name: Ensure django migrations are smooth
-        run: |
-          python manage.py migrate
-
-      - name: Ensure django tests pass
-        run: |
-          python manage.py test
-
   docker:
     runs-on: ubuntu-latest
-    needs: build
+    needs: pre-commit
     env:
         REGISTRY: docker.io
         IMAGE_NAME: gionn/blood-reminders
@@ -93,7 +67,7 @@ jobs:
 
       - name: Test with docker compose
         run: |
-          docker compose -f docker-compose.test.yml up -d --quiet-pull --wait
+          docker-compose -f docker-compose.test.yml up --abort-on-container-exit
 
       - name: Docker push
         uses: docker/build-push-action@v6
