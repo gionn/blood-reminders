@@ -1,7 +1,7 @@
 services:
   db:
     container_name: db
-    image: postgres:9.6.19
+    image: postgres:16.4-alpine
     ports:
       - "5432:5432"
     volumes:
