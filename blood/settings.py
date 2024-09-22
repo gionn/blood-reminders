@@ -155,3 +155,5 @@ LOGGING = {
         'level': os.getenv('APP_LOG_LEVEL', 'INFO'),
     },
 }
+
+CSRF_TRUSTED_ORIGINS = os.environ.get('CSRF_TRUSTED_ORIGINS', '').split(',')
