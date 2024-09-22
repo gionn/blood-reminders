@@ -21,6 +21,7 @@ services:
       DONATIONS_EXPECTED: ${DONATIONS_EXPECTED}
       GA_CODE: ${GA_CODE}
       CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
+      GUNICORN_CMD_ARGS: ${GUNICORN_CMD_ARGS}
   db:
     container_name: db
     image: postgres:16.4-alpine
