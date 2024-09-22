@@ -155,3 +155,6 @@ LOGGING = {
         'level': os.getenv('APP_LOG_LEVEL', 'INFO'),
     },
 }
+
+csrf_env = os.environ.get('CSRF_TRUSTED_ORIGINS', '')
+CSRF_TRUSTED_ORIGINS = csrf_env.split(',') if csrf_env else []
