@@ -130,7 +130,7 @@ def convert_date(date_string):
         return None
     date = datetime.strptime(date_string, '%d/%m/%Y')
     current_tz = timezone.get_current_timezone()
-    return current_tz.localize(date)
+    return date.replace(tzinfo=current_tz)
 
 
 def convert_rh(string, request):
