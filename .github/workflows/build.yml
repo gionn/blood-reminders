@@ -72,7 +72,7 @@ jobs:
           DB_USER: test
           DB_PASS: test
           DB_PATH: /dev/shm/pgdata
-          IMAGE_TAG: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || 'latest' }}
+          IMAGE_TAG: ${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.number) || github.ref_name }}
         run: |
           docker compose -f docker-compose.gha.yml up --abort-on-container-exit
 
