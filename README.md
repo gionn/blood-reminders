@@ -1,7 +1,5 @@
 # Fratres blood reminders
 
-[![CircleCI](https://circleci.com/gh/gionn/blood-reminders.svg?style=svg)](https://circleci.com/gh/gionn/blood-reminders)
-
 A web application to remind people that they can do a new donation after a time frame.
 
 This has been developed inside my local [FRATRES](http://www.fratres.org) group to help the reminding process of the donors.
@@ -38,14 +36,16 @@ DB_PORT=5432
 DB_PATH=./pgdata
 ADMIN_PASSWORD=changeme
 ADMIN_USERNAME=admin
-ADMIN_EMAIL=me@gionn.net
+ADMIN_EMAIL=admin@example.com
 ```
 
 Build and run with docker-composer:
 
-    docker-compose up --build
+```sh
+docker-compose up --build
+```
 
-Access http://localhost:8000/admin/
+Access admin panel at [localhost:8000/admin](http://localhost:8000/admin/)
 
 Default credentials:
 
