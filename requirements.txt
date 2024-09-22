@@ -2,4 +2,4 @@ Django==3.2.25
 gunicorn==23.0.0
 psycopg2==2.9.9
 python-dateutil==2.8.1
-whitenoise==5.2.0
+whitenoise==6.7.0
