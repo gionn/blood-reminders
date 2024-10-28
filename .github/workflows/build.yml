@@ -18,7 +18,7 @@ jobs:
   pre-commit:
     runs-on: ubuntu-latest
     steps:
-      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@a4013b7dfd8453ee94ec5d4eb8cb51d74654f770
+      - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@5cab7bac9b94deb11087c3c39c8e412f6ecf1e00
 
   docker:
     runs-on: ubuntu-latest
