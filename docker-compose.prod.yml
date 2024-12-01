@@ -2,7 +2,7 @@ services:
   reminders:
     container_name: reminders
     restart: always
-    image: gionn/blood-reminders:v1.0.1
+    image: gionn/blood-reminders:v1.0.2
     pull_policy: always
     volumes:
       - ./data:/data
