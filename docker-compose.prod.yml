@@ -6,8 +6,6 @@ services:
     pull_policy: always
     volumes:
       - ./data:/data
-    ports:
-      - "8000:8000"
     environment:
       DEBUG: "False"
       DB_NAME: ${DB_NAME}
