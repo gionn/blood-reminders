@@ -22,6 +22,8 @@ services:
       CSRF_TRUSTED_ORIGINS: ${CSRF_TRUSTED_ORIGINS}
       GUNICORN_CMD_ARGS: ${GUNICORN_CMD_ARGS}
       PORT: ${PORT:-8000}
+    depends_on:
+      - db
   db:
     container_name: db
     image: postgres:16.4-alpine
@@ -37,3 +39,5 @@ services:
     restart: unless-stopped
     ports:
       - '443:443'
+    depends_on:
+      - reminders
