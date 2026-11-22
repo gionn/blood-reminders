@@ -1,4 +1,4 @@
-FROM python:3.12-alpine
+FROM python:3.14-alpine
 EXPOSE 8000
 
 ENV GUNICORN_CMD_ARGS=--bind=0.0.0.0 --workers=2
@@ -13,7 +13,7 @@ VOLUME [ "/data" ]
 
 WORKDIR /usr/src/app
 
-RUN apk --update --no-cache add postgresql-libs python3-dev musl-dev postgresql-dev gcc
+RUN apk --update --no-cache add postgresql-libs musl-dev postgresql-dev gcc
 
 COPY requirements.txt ./
 RUN pip install --no-cache-dir -r requirements.txt

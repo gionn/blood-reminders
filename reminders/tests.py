@@ -1,4 +1,5 @@
-from django.test import TestCase
+from django.conf import settings
+from django.test import SimpleTestCase, TestCase
 from reminders.models import Donor, Donation, BLOOD_TYPE
 from reminders.query import DonorQuerySet
 from django.utils import timezone
@@ -44,4 +45,13 @@ class DonorTestCase(TestCase):
             donor=donor,
             donation_type=donation_type,
             done_at=timezone.now() - timedelta(days=days)
+        )
+
+
+class StaticFilesStorageTest(SimpleTestCase):
+
+    def test_whitenoise_manifest_storage_is_configured(self):
+        self.assertEqual(
+            settings.STORAGES['staticfiles']['BACKEND'],
+            'whitenoise.storage.CompressedManifestStaticFilesStorage',
         )
