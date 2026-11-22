@@ -26,7 +26,7 @@ services:
       - db
   db:
     container_name: db
-    image: postgres:16.4-alpine
+    image: postgres:16.16-alpine
     restart: always
     volumes:
       - ${DB_PATH}:/var/lib/postgresql/data
