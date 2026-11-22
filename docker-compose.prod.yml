@@ -2,7 +2,7 @@ services:
   reminders:
     container_name: reminders
     restart: always
-    image: gionn/blood-reminders:v1.0.2
+    image: gionn/blood-reminders:v1.1.0@sha256:f3363b96a3c9590fa8c96ccf2b126a37782b3caff784f34b13362e0625f182de
     pull_policy: always
     volumes:
       - ./data:/data
@@ -25,7 +25,7 @@ services:
       - db
   db:
     container_name: db
-    image: postgres:16.16-alpine
+    image: postgres:16.16-alpine@sha256:f2f98726820d0342055351c6e9d36e705f5bfffb3dd53ff556325114b08afb6d
     restart: always
     volumes:
       - ${DB_PATH}:/var/lib/postgresql/data
