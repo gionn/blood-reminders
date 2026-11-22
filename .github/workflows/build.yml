@@ -19,6 +19,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: Alfresco/alfresco-build-tools/.github/actions/pre-commit@a4013b7dfd8453ee94ec5d4eb8cb51d74654f770
+        with:
+          python-version: "3.14"
 
   docker:
     runs-on: ubuntu-latest
