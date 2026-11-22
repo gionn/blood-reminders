@@ -18,6 +18,11 @@ updates:
       python:
         patterns:
           - "*"
+    # Keep Django on the 5.2 LTS branch until 6.2 LTS. Semver-major rules do not apply to security updates.
+    ignore:
+      - dependency-name: "django"
+        update-types:
+          - "version-update:semver-major"
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
@@ -27,6 +32,12 @@ updates:
       docker:
         patterns:
           - "*"
+    # Stay on Python 3.14 until gunicorn and whitenoise declare 3.15 support.
+    ignore:
+      - dependency-name: "python"
+        update-types:
+          - "version-update:semver-major"
+          - "version-update:semver-minor"
   - package-ecosystem: "docker"
     directory: "/nginx"
     schedule:
